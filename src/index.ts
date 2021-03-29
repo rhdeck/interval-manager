@@ -219,13 +219,16 @@ export function validateSchedule({
   if (!isValidTimeZone(timezone)) {
     throw new Error("Invalid schedule - no timezone set");
   }
+  if (!hours.length) throw new Error("hours array must have at least one hour");
   hours.map((hour) => {
     if (hour < 0 || hour > 23)
       throw new Error("Hour must be between 0 and 23 inclusive");
     if (Math.floor(hour) !== hour)
       throw new Error("Hour must be a whole number between 0 and 23 inclusive");
   });
-  if (seconds)
+  if (seconds) {
+    if (!seconds.length)
+      throw new Error("Seconds array must have at least one second defined");
     seconds.map((second) => {
       if (second < 0 || second > 59)
         throw new Error("Second must be between 0 and 59 inclusive");
@@ -234,7 +237,10 @@ export function validateSchedule({
           "Second must be a whole number between 0 and 59 inclusive"
         );
     });
-  if (minutes)
+  }
+  if (minutes) {
+    if (!minutes.length)
+      throw new Error("Minutes array must have at least one minute defined");
     minutes.map((minute) => {
       if (minute < 0 || minute > 59)
         throw new Error("Minute must be between 0 and 59 inclusive");
@@ -243,6 +249,7 @@ export function validateSchedule({
           "Minute must be a whole number between 0 and 59 inclusive"
         );
     });
+  }
   if (orderInMonth && (daysOfMonth || daysOfYear || weekInterval))
     throw new Error(
       "Invalid schedule - cannot mix orderinmonth with daysOfMonth, daysOfYear or weekInterval"
