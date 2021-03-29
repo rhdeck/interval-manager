@@ -18,9 +18,9 @@ Get the next scheduled time based on the provided interval
 * --minute \<`minute...`> Set minute on which this should fire 
 * --second \<`second...`> Set second on which this should file 
 * --timezone \<`timezone`> Timezone for this (default: `America/New_York`)
-* --reference-date \<`isoDate`> ISO-8601 representation of the reference (default: `2021-03-29T11:20:48.206Z`)
-* --starting-date \<`isoDate`> ISO-8601 representation of the date the interval had started (default: `2021-03-29T11:20:48.206Z`)
-* --ending-date \<`isoDate`> ISO-8601 representation of the date the interval had ended (default: `2021-03-29T11:20:48.206Z`)
+* --reference-date \<`isoDate`> ISO-8601 representation of the reference (default: `2021-03-29T11:21:27.994Z`)
+* --starting-date \<`isoDate`> ISO-8601 representation of the date the interval had started (default: `2021-03-29T11:21:27.994Z`)
+* --ending-date \<`isoDate`> ISO-8601 representation of the date the interval had ended (default: `2021-03-29T11:21:27.994Z`)
 * --dayOfMonth \<`daynumber...`> Day of the month to run 1-31 (note that not all months have >28 days) 
 * --dayOfWeek \<`dayofweek...`> Day of the week to run, either a number from 0-6 one of sunday, monday, tuesday, wednesday, thursday, friday, saturday 
 * --monthOfYear \<`month...`> Month of the year to run in, either a number from 1-12 one of january, february, march, april, may, june, july, august, september, october, november, december 
@@ -2276,7 +2276,7 @@ Defined in: node_modules/commander/typings/index.d.ts:395
 
 • `Optional` **dayInterval**: *number*
 
-Defined in: [src/index.ts:195](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L195)
+Defined in: [src/index.ts:195](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L195)
 
 ___
 
@@ -2284,7 +2284,7 @@ ___
 
 • `Optional` **daysOfMonth**: *number*[]
 
-Defined in: [src/index.ts:190](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L190)
+Defined in: [src/index.ts:190](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L190)
 
 ___
 
@@ -2292,7 +2292,7 @@ ___
 
 • `Optional` **daysOfWeek**: *number*[]
 
-Defined in: [src/index.ts:191](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L191)
+Defined in: [src/index.ts:191](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L191)
 
 ___
 
@@ -2300,7 +2300,7 @@ ___
 
 • `Optional` **daysOfYear**: *number*[]
 
-Defined in: [src/index.ts:192](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L192)
+Defined in: [src/index.ts:192](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L192)
 
 ___
 
@@ -2308,7 +2308,7 @@ ___
 
 • `Optional` **endingOn**: Date
 
-Defined in: [src/index.ts:185](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L185)
+Defined in: [src/index.ts:185](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L185)
 
 ___
 
@@ -2316,7 +2316,7 @@ ___
 
 • **hours**: *number*[]
 
-Defined in: [src/index.ts:186](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L186)
+Defined in: [src/index.ts:186](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L186)
 
 ___
 
@@ -2324,7 +2324,7 @@ ___
 
 • `Optional` **minutes**: *number*[]
 
-Defined in: [src/index.ts:187](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L187)
+Defined in: [src/index.ts:187](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L187)
 
 ___
 
@@ -2332,7 +2332,7 @@ ___
 
 • `Optional` **monthsOfYear**: *number*[]
 
-Defined in: [src/index.ts:189](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L189)
+Defined in: [src/index.ts:189](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L189)
 
 ___
 
@@ -2340,7 +2340,7 @@ ___
 
 • `Optional` **orderInMonth**: *number*[]
 
-Defined in: [src/index.ts:194](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L194)
+Defined in: [src/index.ts:194](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L194)
 
 ___
 
@@ -2348,7 +2348,7 @@ ___
 
 • `Optional` **seconds**: *number*[]
 
-Defined in: [src/index.ts:188](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L188)
+Defined in: [src/index.ts:188](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L188)
 
 ___
 
@@ -2356,7 +2356,7 @@ ___
 
 • `Optional` **startingOn**: Date
 
-Defined in: [src/index.ts:184](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L184)
+Defined in: [src/index.ts:184](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L184)
 
 ___
 
@@ -2364,7 +2364,7 @@ ___
 
 • **timezone**: *string*
 
-Defined in: [src/index.ts:183](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L183)
+Defined in: [src/index.ts:183](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L183)
 
 ___
 
@@ -2372,7 +2372,7 @@ ___
 
 • `Optional` **weekInterval**: *number*
 
-Defined in: [src/index.ts:193](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L193)
+Defined in: [src/index.ts:193](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L193)
 
 
 <a name="modules__tests___intervalmd"></a>
@@ -2532,7 +2532,7 @@ Name | Type |
 
 **Returns:** Date
 
-Defined in: [src/index.ts:2](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L2)
+Defined in: [src/index.ts:2](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L2)
 
 ___
 
@@ -2548,7 +2548,7 @@ Name | Type |
 
 **Returns:** *boolean*
 
-Defined in: [src/index.ts:291](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L291)
+Defined in: [src/index.ts:291](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L291)
 
 ___
 
@@ -2564,4 +2564,4 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [src/index.ts:197](https://github.com/rhdeck/interval-manager/blob/b64ed4c/src/index.ts#L197)
+Defined in: [src/index.ts:197](https://github.com/rhdeck/interval-manager/blob/3b9aeec/src/index.ts#L197)
