@@ -1,4 +1,11 @@
 import { DateTime } from "luxon";
+/**
+ * Get the next date/time after the specified reference date
+ * @param schedule IntervalSchedule that defines this interval pattern
+ * @param startingOn Date the schedule starts on. Matters for dayInterval and weekInterval only. Defaults to now
+ * @param nowDate Date the result must be after. Defaults to now
+ * @returns Date with the next time this schedule should fire
+ */
 export function getNextDate(
   schedule: IntervalSchedule,
   startingOn: Date = new Date(),
@@ -179,36 +186,67 @@ export function getNextDate(
     throw "No next date available";
   }
 }
+/**
+ * Interface for defining a schedule for delayed intervals
+ */
 export interface IntervalSchedule {
+  /**
+   * Time zone to define local time rule (e.g. daylight savings)
+   */
   timezone: string;
+  /**
+   * Starting date for this schedule (matters for dayInterval and weekInterval)
+   */
   startingOn?: Date;
+  /**
+   * Ending date for this schedule
+   */
   endingOn?: Date;
+  /**
+   * Hours (in local time) on which this schedule should fire
+   */
   hours: number[];
+  /**
+   * Minutes on which this should fire (e.g. [0, 30] for on the hour and half-hour) (default [0])
+   */
   minutes?: number[];
+  /** Seconds on which this should file (default [0]) */
   seconds?: number[];
+  /** Months of the year on which this should fire. Not compatible with dayInterval, weekInterval, daysOfYear */
   monthsOfYear?: number[];
+  /** Days of the month on which this should fire. Note that not all months have >28 days. Not compatible with dayInterval, weekInterval, daysOfYear */
   daysOfMonth?: number[];
+  /** Days of the week (specified as 0-6, where 0 is Sunday and 6 is Saturday). Not compatible with dayInterval, weekInterval, daysOfYear, daysOfMonth */
   daysOfWeek?: number[];
+  /** Days of the year on which this should fire. E.g. to run on the 88th day of the year, specify `[88]`. Note that not all months have >28 days. Not compatible with dayInterval, weekInterval, daysOfWeek */
   daysOfYear?: number[];
+  /** Weeks to wait between runs, starting from the startsOn date. This can run multiple times per day or on multiple weekdays based on daysOfWeek. Not compatible with dayInterval, monthsOfYear, daysOfYear */
   weekInterval?: number;
+  /** Order of the weekday to fire. For example, to run on the first friday, use `{orderInMonth: [1], daysOfWeek:[5]}`. Note that using this requires specifying `daysOfWeek`. Not compatibile with dayInterval, weekInterval, daysOfMonth, daysOfYear */
   orderInMonth?: number[];
+  /** Days to wait between runs, starting from the startsOn date. This can run multiple times per day if `hour`, `minute` or `second` are set with multiple values.Not compatible with weekInterval, monthsOfYear, daysOfYear */
   dayInterval?: number;
 }
-export function validateSchedule({
-  timezone,
-  startingOn,
-  endingOn,
-  hours,
-  minutes,
-  seconds,
-  monthsOfYear,
-  daysOfMonth,
-  daysOfWeek,
-  daysOfYear,
-  orderInMonth,
-  weekInterval,
-  dayInterval,
-}: IntervalSchedule): void {
+/**
+ * Assert-style validator of whether a given IntervalSchedule contains valid values. Throws if not
+ * @param schedule IntervalSchedule to test
+ */
+export function validateSchedule(schedule: IntervalSchedule): void {
+  const {
+    timezone,
+    startingOn,
+    endingOn,
+    hours,
+    minutes,
+    seconds,
+    monthsOfYear,
+    daysOfMonth,
+    daysOfWeek,
+    daysOfYear,
+    orderInMonth,
+    weekInterval,
+    dayInterval,
+  } = schedule;
   if (endingOn && !(endingOn instanceof Date))
     throw new Error("If set, endingOn must be a date");
   if (startingOn && !(startingOn instanceof Date))
@@ -250,6 +288,15 @@ export function validateSchedule({
         );
     });
   }
+  if (orderInMonth && !orderInMonth.length)
+    throw new Error("orderInMonth array must contain values");
+  if (daysOfMonth && !daysOfMonth.length)
+    throw new Error("daysOfMonth array must contain values");
+  if (daysOfYear && !daysOfYear.length)
+    throw new Error("daysOfYear array must contain values");
+  if (daysOfWeek && !daysOfWeek.length)
+    throw new Error("daysOfWeek array must contain values");
+
   if (orderInMonth && (daysOfMonth || daysOfYear || weekInterval))
     throw new Error(
       "Invalid schedule - cannot mix orderinmonth with daysOfMonth, daysOfYear or weekInterval"
@@ -276,6 +323,8 @@ export function validateSchedule({
       "Invalid schedule - week interval must include at least one day of week to run on"
     );
   }
+  if (weekInterval && Math.floor(weekInterval) !== weekInterval)
+    throw new Error("weekInterval must be an integer");
   if (
     dayInterval &&
     (daysOfMonth || daysOfYear || orderInMonth || monthsOfYear)
@@ -284,6 +333,9 @@ export function validateSchedule({
       "Invalid schedule - cannot mix dayInterval with weekInterval, daysOfMonth, daysOfYear, orderInMonth, monthsOfYear"
     );
   }
+  if (dayInterval && Math.floor(dayInterval) !== dayInterval)
+    throw new Error("dayInterval must be an integer");
+
   if (daysOfYear && (daysOfMonth || monthsOfYear || daysOfWeek)) {
     throw new Error(
       "Invalid schedule - cannot mix daysOfYear with other date considerations"
@@ -295,6 +347,11 @@ export function validateSchedule({
     );
   }
 }
+/**
+ * Determines whether a given string is a valid/known timezone identifier
+ * @param tz Source string (e.g. `America/New_York`)
+ * @returns True if the string is a valid time zone, false if not
+ */
 export function isValidTimeZone(tz: string): boolean {
   if (!Intl || !Intl.DateTimeFormat().resolvedOptions().timeZone) {
     throw "Time zones are not available in this environment";
