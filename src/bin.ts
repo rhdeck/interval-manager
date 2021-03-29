@@ -91,115 +91,119 @@ commander.option(
   "Use human-readable version of the date as output (default is ISO-8601)"
 );
 commander.parse(process.argv);
-const opts = commander.opts();
-const {
-  hour,
-  minute,
-  second,
-  timezone,
-  referenceDate,
-  startingDate,
-  endingDate,
-  dayOfMonth,
-  dayOfWeek,
-  monthOfYear,
-  maxDates,
-  orderInMonth,
-  dayOfYear,
-  weekInterval,
-  dayInterval,
-  verbose,
-} = opts;
-
-try {
-  const schedule: IntervalSchedule = {
-    hours: (Array.isArray(hour)
-      ? hour
-      : [DateTime.now().hour]
-    ).map((h: string) => parseInt(h)),
-    minutes: (Array.isArray(minute)
-      ? minute
-      : [DateTime.now().minute]
-    ).map((m: string) => parseInt(m)),
-    seconds: (Array.isArray(second)
-      ? second
-      : [DateTime.now().second]
-    ).map((s: string) => parseInt(s)),
-    daysOfMonth: dayOfMonth && dayOfMonth.map((s: string) => parseInt(s)),
-    daysOfWeek:
-      dayOfWeek &&
-      dayOfWeek.map((dow: string) => {
-        const parsed = parseInt(dow);
-        if (isNaN(parsed)) {
-          const found = daysOfWeek.indexOf(dow.toLowerCase());
-          if (found < 0)
-            throw new Error(
-              "day of week " +
-                dow +
-                " was not in the valid list: " +
-                daysOfWeek.join(", ")
-            );
-          return found;
-        } else {
-          if (parsed < 0 || parsed > 6)
-            throw new Error(
-              "Day of week number must be between 0 and 6 inclusive"
-            );
-          return parsed;
-        }
-      }),
-    monthsOfYear:
-      monthOfYear &&
-      monthOfYear.map((month: string) => {
-        const parsed = parseInt(month);
-        if (isNaN(parsed)) {
-          const found = monthsOfYear.indexOf(month.toLowerCase()) + 1;
-          if (!found) {
-            throw new Error(
-              "Month " +
-                month +
-                " was not in the valid list: " +
-                monthsOfYear.join(", ")
-            );
-          }
-          return found;
-        } else {
-          if (parsed < 1 || parsed > 12)
-            throw new Error("Month number must be between 1 and 12 inclusive");
-          return parsed;
-        }
-      }),
-    orderInMonth:
-      orderInMonth && orderInMonth.map((order: string) => parseInt(order)),
-    daysOfYear: dayOfYear && dayOfYear.map((doy: string) => parseInt(doy)),
+if (!commander.isDocumenting) {
+  const opts = commander.opts();
+  const {
+    hour,
+    minute,
+    second,
+    timezone,
+    referenceDate,
+    startingDate,
+    endingDate,
+    dayOfMonth,
+    dayOfWeek,
+    monthOfYear,
+    maxDates,
+    orderInMonth,
+    dayOfYear,
     weekInterval,
     dayInterval,
-    timezone,
-    endingOn: endingDate,
-  };
-  //   if (verbose) console.log(schedule);
-  validateSchedule(schedule);
+    verbose,
+  } = opts;
 
-  let nextDate = new Date(referenceDate);
-  const out: string[] = [];
-  for (let x = 0; x < maxDates; x++) {
-    nextDate = getNextDate(
-      schedule,
-      new Date(startingDate),
-      new Date(nextDate)
-    );
-    out.push(
-      verbose
-        ? DateTime.fromJSDate(nextDate).toLocaleString(
-            DateTime.DATETIME_HUGE_WITH_SECONDS
-          )
-        : nextDate.toISOString()
-    );
+  try {
+    const schedule: IntervalSchedule = {
+      hours: (Array.isArray(hour)
+        ? hour
+        : [DateTime.now().hour]
+      ).map((h: string) => parseInt(h)),
+      minutes: (Array.isArray(minute)
+        ? minute
+        : [DateTime.now().minute]
+      ).map((m: string) => parseInt(m)),
+      seconds: (Array.isArray(second)
+        ? second
+        : [DateTime.now().second]
+      ).map((s: string) => parseInt(s)),
+      daysOfMonth: dayOfMonth && dayOfMonth.map((s: string) => parseInt(s)),
+      daysOfWeek:
+        dayOfWeek &&
+        dayOfWeek.map((dow: string) => {
+          const parsed = parseInt(dow);
+          if (isNaN(parsed)) {
+            const found = daysOfWeek.indexOf(dow.toLowerCase());
+            if (found < 0)
+              throw new Error(
+                "day of week " +
+                  dow +
+                  " was not in the valid list: " +
+                  daysOfWeek.join(", ")
+              );
+            return found;
+          } else {
+            if (parsed < 0 || parsed > 6)
+              throw new Error(
+                "Day of week number must be between 0 and 6 inclusive"
+              );
+            return parsed;
+          }
+        }),
+      monthsOfYear:
+        monthOfYear &&
+        monthOfYear.map((month: string) => {
+          const parsed = parseInt(month);
+          if (isNaN(parsed)) {
+            const found = monthsOfYear.indexOf(month.toLowerCase()) + 1;
+            if (!found) {
+              throw new Error(
+                "Month " +
+                  month +
+                  " was not in the valid list: " +
+                  monthsOfYear.join(", ")
+              );
+            }
+            return found;
+          } else {
+            if (parsed < 1 || parsed > 12)
+              throw new Error(
+                "Month number must be between 1 and 12 inclusive"
+              );
+            return parsed;
+          }
+        }),
+      orderInMonth:
+        orderInMonth && orderInMonth.map((order: string) => parseInt(order)),
+      daysOfYear: dayOfYear && dayOfYear.map((doy: string) => parseInt(doy)),
+      weekInterval,
+      dayInterval,
+      timezone,
+      endingOn: endingDate,
+    };
+    //   if (verbose) console.log(schedule);
+    validateSchedule(schedule);
+
+    let nextDate = new Date(referenceDate);
+    const out: string[] = [];
+    for (let x = 0; x < maxDates; x++) {
+      nextDate = getNextDate(
+        schedule,
+        new Date(startingDate),
+        new Date(nextDate)
+      );
+      out.push(
+        verbose
+          ? DateTime.fromJSDate(nextDate).toLocaleString(
+              DateTime.DATETIME_HUGE_WITH_SECONDS
+            )
+          : nextDate.toISOString()
+      );
+    }
+    console.log(JSON.stringify(out, null, 2));
+  } catch (e) {
+    if (verbose) console.error(e);
+    else console.error(e.message);
+    process.exit(1);
   }
-  console.log(JSON.stringify(out, null, 2));
-} catch (e) {
-  if (verbose) console.error(e);
-  else console.error(e.message);
-  process.exit(1);
 }
 export { commander };
