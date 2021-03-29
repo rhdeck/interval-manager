@@ -18,9 +18,9 @@ Get the next scheduled time based on the provided interval
 * --minute \<`minute...`> Set minute on which this should fire 
 * --second \<`second...`> Set second on which this should file 
 * --timezone \<`timezone`> Timezone for this (default: `America/New_York`)
-* --reference-date \<`isoDate`> ISO-8601 representation of the reference (default: `2021-03-29T12:12:08.134Z`)
-* --starting-date \<`isoDate`> ISO-8601 representation of the date the interval had started (default: `2021-03-29T12:12:08.134Z`)
-* --ending-date \<`isoDate`> ISO-8601 representation of the date the interval had ended (default: `2021-03-29T12:12:08.134Z`)
+* --reference-date \<`isoDate`> ISO-8601 representation of the reference (default: `2021-03-29T12:44:31.841Z`)
+* --starting-date \<`isoDate`> ISO-8601 representation of the date the interval had started (default: `2021-03-29T12:44:31.841Z`)
+* --ending-date \<`isoDate`> ISO-8601 representation of the date the interval had ended (default: `2021-03-29T12:44:31.841Z`)
 * --dayOfMonth \<`daynumber...`> Day of the month to run 1-31 (note that not all months have >28 days) 
 * --dayOfWeek \<`dayofweek...`> Day of the week to run, either a number from 0-6 one of sunday, monday, tuesday, wednesday, thursday, friday, saturday 
 * --monthOfYear \<`month...`> Month of the year to run in, either a number from 1-12 one of january, february, march, april, may, june, july, august, september, october, november, december 
@@ -55,17 +55,21 @@ Get the next scheduled time based on the provided interval
 
 ▸ **getNextDate**(`schedule`: [*IntervalSchedule*](#interfacesintervalschedulemd), `startingOn?`: Date, `nowDate?`: Date): Date
 
+Get the next date/time after the specified reference date
+
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`schedule` | [*IntervalSchedule*](#interfacesintervalschedulemd) |
-`startingOn` | Date |
-`nowDate` | Date |
+Name | Type | Description |
+:------ | :------ | :------ |
+`schedule` | [*IntervalSchedule*](#interfacesintervalschedulemd) | IntervalSchedule that defines this interval pattern   |
+`startingOn` | Date | Date the schedule starts on. Matters for dayInterval and weekInterval only. Defaults to now   |
+`nowDate` | Date | Date the result must be after. Defaults to now   |
 
 **Returns:** Date
 
-Defined in: [index.ts:2](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L2)
+Date with the next time this schedule should fire
+
+Defined in: [index.ts:9](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L9)
 
 ___
 
@@ -73,31 +77,37 @@ ___
 
 ▸ **isValidTimeZone**(`tz`: *string*): *boolean*
 
+Determines whether a given string is a valid/known timezone identifier
+
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`tz` | *string* |
+Name | Type | Description |
+:------ | :------ | :------ |
+`tz` | *string* | Source string (e.g. `America/New_York`)   |
 
 **Returns:** *boolean*
 
-Defined in: [index.ts:298](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L298)
+True if the string is a valid time zone, false if not
+
+Defined in: [index.ts:355](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L355)
 
 ___
 
 ### validateSchedule
 
-▸ **validateSchedule**(`__namedParameters`: [*IntervalSchedule*](#interfacesintervalschedulemd)): *void*
+▸ **validateSchedule**(`schedule`: [*IntervalSchedule*](#interfacesintervalschedulemd)): *void*
+
+Assert-style validator of whether a given IntervalSchedule contains valid values. Throws if not
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`__namedParameters` | [*IntervalSchedule*](#interfacesintervalschedulemd) |
+Name | Type | Description |
+:------ | :------ | :------ |
+`schedule` | [*IntervalSchedule*](#interfacesintervalschedulemd) | IntervalSchedule to test    |
 
 **Returns:** *void*
 
-Defined in: [index.ts:197](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L197)
+Defined in: [index.ts:234](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L234)
 
 
 <a name="interfacesintervalschedulemd"></a>
@@ -105,6 +115,8 @@ Defined in: [index.ts:197](https://github.com/rhdeck/interval-manager/blob/3696d
 [@raydeck/interval-manager - v1.1.0](#readmemd) / IntervalSchedule
 
 # Interface: IntervalSchedule
+
+Interface for defining a schedule for delayed intervals
 
 ## Table of contents
 
@@ -130,7 +142,9 @@ Defined in: [index.ts:197](https://github.com/rhdeck/interval-manager/blob/3696d
 
 • `Optional` **dayInterval**: *number*
 
-Defined in: [index.ts:195](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L195)
+Days to wait between runs, starting from the startsOn date. This can run multiple times per day if `hour`, `minute` or `second` are set with multiple values.Not compatible with weekInterval, monthsOfYear, daysOfYear
+
+Defined in: [index.ts:228](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L228)
 
 ___
 
@@ -138,7 +152,9 @@ ___
 
 • `Optional` **daysOfMonth**: *number*[]
 
-Defined in: [index.ts:190](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L190)
+Days of the month on which this should fire. Note that not all months have >28 days. Not compatible with dayInterval, weekInterval, daysOfYear
+
+Defined in: [index.ts:218](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L218)
 
 ___
 
@@ -146,7 +162,9 @@ ___
 
 • `Optional` **daysOfWeek**: *number*[]
 
-Defined in: [index.ts:191](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L191)
+Days of the week (specified as 0-6, where 0 is Sunday and 6 is Saturday). Not compatible with dayInterval, weekInterval, daysOfYear, daysOfMonth
+
+Defined in: [index.ts:220](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L220)
 
 ___
 
@@ -154,7 +172,9 @@ ___
 
 • `Optional` **daysOfYear**: *number*[]
 
-Defined in: [index.ts:192](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L192)
+Days of the year on which this should fire. E.g. to run on the 88th day of the year, specify `[88]`. Note that not all months have >28 days. Not compatible with dayInterval, weekInterval, daysOfWeek
+
+Defined in: [index.ts:222](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L222)
 
 ___
 
@@ -162,7 +182,9 @@ ___
 
 • `Optional` **endingOn**: Date
 
-Defined in: [index.ts:185](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L185)
+Ending date for this schedule
+
+Defined in: [index.ts:204](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L204)
 
 ___
 
@@ -170,7 +192,9 @@ ___
 
 • **hours**: *number*[]
 
-Defined in: [index.ts:186](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L186)
+Hours (in local time) on which this schedule should fire
+
+Defined in: [index.ts:208](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L208)
 
 ___
 
@@ -178,7 +202,9 @@ ___
 
 • `Optional` **minutes**: *number*[]
 
-Defined in: [index.ts:187](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L187)
+Minutes on which this should fire (e.g. [0, 30] for on the hour and half-hour) (default [0])
+
+Defined in: [index.ts:212](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L212)
 
 ___
 
@@ -186,7 +212,9 @@ ___
 
 • `Optional` **monthsOfYear**: *number*[]
 
-Defined in: [index.ts:189](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L189)
+Months of the year on which this should fire. Not compatible with dayInterval, weekInterval, daysOfYear
+
+Defined in: [index.ts:216](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L216)
 
 ___
 
@@ -194,7 +222,9 @@ ___
 
 • `Optional` **orderInMonth**: *number*[]
 
-Defined in: [index.ts:194](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L194)
+Order of the weekday to fire. For example, to run on the first friday, use `{orderInMonth: [1], daysOfWeek:[5]}`. Note that using this requires specifying `daysOfWeek`. Not compatibile with dayInterval, weekInterval, daysOfMonth, daysOfYear
+
+Defined in: [index.ts:226](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L226)
 
 ___
 
@@ -202,7 +232,9 @@ ___
 
 • `Optional` **seconds**: *number*[]
 
-Defined in: [index.ts:188](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L188)
+Seconds on which this should file (default [0])
+
+Defined in: [index.ts:214](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L214)
 
 ___
 
@@ -210,7 +242,9 @@ ___
 
 • `Optional` **startingOn**: Date
 
-Defined in: [index.ts:184](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L184)
+Starting date for this schedule (matters for dayInterval and weekInterval)
+
+Defined in: [index.ts:200](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L200)
 
 ___
 
@@ -218,7 +252,9 @@ ___
 
 • **timezone**: *string*
 
-Defined in: [index.ts:183](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L183)
+Time zone to define local time rule (e.g. daylight savings)
+
+Defined in: [index.ts:196](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L196)
 
 ___
 
@@ -226,4 +262,6 @@ ___
 
 • `Optional` **weekInterval**: *number*
 
-Defined in: [index.ts:193](https://github.com/rhdeck/interval-manager/blob/3696df9/src/index.ts#L193)
+Weeks to wait between runs, starting from the startsOn date. This can run multiple times per day or on multiple weekdays based on daysOfWeek. Not compatible with dayInterval, monthsOfYear, daysOfYear
+
+Defined in: [index.ts:224](https://github.com/rhdeck/interval-manager/blob/956969b/src/index.ts#L224)
