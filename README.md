@@ -1,37 +1,9 @@
 
 <a name="readmemd"></a>
 
-Template for making easy-to-work-with tempates
+Manage Complex Time Intervals
 
-# ts-template
-
-## Usage
-
-1. [Copy this template](https://github.com/rhdeck/ts-template/)
-2. Clone to a local directory (eg `git clone https://github.com/me/my-repository/ && cd my-repository`)
-3. Run `yarn && yarn setup` to initialize the node package (Get rid of template strings - and this readme!)
-4. Happy Coding!
-
-## Useful Scripts
-
-1. `yarn build` will build using typescript pre-configured to node-compatible defaults
-2. `yarn docs` will auto-generate a README.md that starts with TOP.md, then adds CLI documentation (via [commanderdoc](https://npmjs.com/package/commanderdoc)) for any tool you have set up, and then library documentation after that.
-3. `yarn test` is pre-configured to test for typescript errors
-4. `yarn watch` will watch the codebase for changes and rebuild (using [livelink](https://npmjs.com/package/@raydeck/livelink))
-
-## Git code protections
-
-1. `git commit` will be blocked on the `main` branch unless you set the environment variable `ALLOWMAIN=1` Branch commits and PRs are thus encouraged
-2. `git commit` also tests messages for meeting the commitline standard conventions.
-3. `git commit` blocks pushes that do not pass `yarn test` (as a base case, they must pass typescript compilation)
-4. `npm publish` will always rebuild the code, the documentation, and push those changes back to the repository.
-5. `npm publish` will only publish the lib and src directories - any others are no
-
-## A note on "main"
-
-I made a deliberate choice to change the primary branch from `master` to `main` for reasons that are obvious to some. This repository endeavors to make that just automatic.
-
-PRs and feedback welcome via GitHub issues.
+# interval-manager
 
 
 <a name="__climd"></a>
@@ -46,9 +18,9 @@ Get the next scheduled time based on the provided interval
 * --minute \<`minute...`> Set minute on which this should fire 
 * --second \<`second...`> Set second on which this should file 
 * --timezone \<`timezone`> Timezone for this (default: `America/New_York`)
-* --reference-date \<`isoDate`> ISO-8601 representation of the reference (default: `2021-03-29T10:25:34.816Z`)
-* --starting-date \<`isoDate`> ISO-8601 representation of the date the interval had started (default: `2021-03-29T10:25:34.816Z`)
-* --ending-date \<`isoDate`> ISO-8601 representation of the date the interval had ended (default: `2021-03-29T10:25:34.816Z`)
+* --reference-date \<`isoDate`> ISO-8601 representation of the reference (default: `2021-03-29T11:17:23.358Z`)
+* --starting-date \<`isoDate`> ISO-8601 representation of the date the interval had started (default: `2021-03-29T11:17:23.358Z`)
+* --ending-date \<`isoDate`> ISO-8601 representation of the date the interval had ended (default: `2021-03-29T11:17:23.358Z`)
 * --dayOfMonth \<`daynumber...`> Day of the month to run 1-31 (note that not all months have >28 days) 
 * --dayOfWeek \<`dayofweek...`> Day of the week to run, either a number from 0-6 one of sunday, monday, tuesday, wednesday, thursday, friday, saturday 
 * --monthOfYear \<`month...`> Month of the year to run in, either a number from 1-12 one of january, february, march, april, may, june, july, august, september, october, november, december 
@@ -74,38 +46,6 @@ Get the next scheduled time based on the provided interval
 - [index](#modulesindexmd)
 
 
-<a name="interfacesbincommanderaddhelptextcontextmd"></a>
-
-[@raydeck/interval-manager - v1.0.0](#readmemd) / [bin](#modulesbinmd) / [commander](#modulesbincommandermd) / AddHelpTextContext
-
-# Interface: AddHelpTextContext
-
-[bin](#modulesbinmd).[commander](#modulesbincommandermd).AddHelpTextContext
-
-## Table of contents
-
-### Properties
-
-- [command](#command)
-- [error](#error)
-
-## Properties
-
-### command
-
-• **command**: [*Command*](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:146
-
-___
-
-### error
-
-• **error**: *boolean*
-
-Defined in: node_modules/commander/typings/index.d.ts:145
-
-
 <a name="interfacesbincommandercommandmd"></a>
 
 [@raydeck/interval-manager - v1.0.0](#readmemd) / [bin](#modulesbinmd) / [commander](#modulesbincommandermd) / Command
@@ -120,35 +60,30 @@ Defined in: node_modules/commander/typings/index.d.ts:145
 
   ↳ [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
+## Indexable
+
+▪ [key: *string*]: *any*
+
 ## Table of contents
 
 ### Properties
 
 - [args](#args)
 - [commands](#commands)
-- [parent](#parent)
 
 ### Methods
 
 - [action](#action)
 - [addCommand](#addcommand)
 - [addHelpCommand](#addhelpcommand)
-- [addHelpText](#addhelptext)
-- [addOption](#addoption)
 - [alias](#alias)
 - [aliases](#aliases)
-- [allowExcessArguments](#allowexcessarguments)
 - [allowUnknownOption](#allowunknownoption)
 - [arguments](#arguments)
 - [combineFlagAndOptionalValue](#combineflagandoptionalvalue)
 - [command](#command)
-- [configureHelp](#configurehelp)
-- [configureOutput](#configureoutput)
 - [createCommand](#createcommand)
-- [createHelp](#createhelp)
-- [createOption](#createoption)
 - [description](#description)
-- [enablePositionalOptions](#enablepositionaloptions)
 - [exitOverride](#exitoverride)
 - [help](#help)
 - [helpInformation](#helpinformation)
@@ -161,7 +96,7 @@ Defined in: node_modules/commander/typings/index.d.ts:145
 - [parse](#parse)
 - [parseAsync](#parseasync)
 - [parseOptions](#parseoptions)
-- [passThroughOptions](#passthroughoptions)
+- [passCommandToAction](#passcommandtoaction)
 - [requiredOption](#requiredoption)
 - [storeOptionsAsProperties](#storeoptionsasproperties)
 - [usage](#usage)
@@ -173,7 +108,7 @@ Defined in: node_modules/commander/typings/index.d.ts:145
 
 • **args**: *string*[]
 
-Defined in: node_modules/commander/typings/index.d.ts:164
+Defined in: node_modules/commander/typings/index.d.ts:33
 
 ___
 
@@ -181,15 +116,7 @@ ___
 
 • **commands**: [*Command*](#interfacesbincommandercommandmd)[]
 
-Defined in: node_modules/commander/typings/index.d.ts:165
-
-___
-
-### parent
-
-• **parent**: *null* \| [*Command*](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:166
+Defined in: node_modules/commander/typings/index.d.ts:35
 
 ## Methods
 
@@ -217,7 +144,7 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:305
+Defined in: node_modules/commander/typings/index.d.ts:141
 
 ___
 
@@ -240,7 +167,7 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:234
+Defined in: node_modules/commander/typings/index.d.ts:103
 
 ___
 
@@ -265,62 +192,7 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:252
-
-___
-
-### addHelpText
-
-▸ **addHelpText**(`position`: [*AddHelpTextPosition*](#addhelptextposition), `text`: *string*): [*Command*](#interfacesbincommandercommandmd)
-
-Add additional text to be displayed with the built-in help.
-
-Position is 'before' or 'after' to affect just this command,
-and 'beforeAll' or 'afterAll' to affect this command and all its subcommands.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`position` | [*AddHelpTextPosition*](#addhelptextposition) |
-`text` | *string* |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:586
-
-▸ **addHelpText**(`position`: [*AddHelpTextPosition*](#addhelptextposition), `text`: (`context`: [*AddHelpTextContext*](#interfacesbincommanderaddhelptextcontextmd)) => *undefined* \| *string*): [*Command*](#interfacesbincommandercommandmd)
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`position` | [*AddHelpTextPosition*](#addhelptextposition) |
-`text` | (`context`: [*AddHelpTextContext*](#interfacesbincommanderaddhelptextcontextmd)) => *undefined* \| *string* |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:587
-
-___
-
-### addOption
-
-▸ **addOption**(`option`: [*Option*](#interfacesbincommanderoptionmd)): [*Command*](#interfacesbincommandercommandmd)
-
-Add a prepared Option.
-
-See .option() and .requiredOption() for creating and attaching an option in a single call.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`option` | [*Option*](#interfacesbincommanderoptionmd) |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:379
+Defined in: node_modules/commander/typings/index.d.ts:121
 
 ___
 
@@ -342,7 +214,7 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:508
+Defined in: node_modules/commander/typings/index.d.ts:305
 
 ▸ **alias**(): *string*
 
@@ -350,7 +222,7 @@ Get alias for the command.
 
 **Returns:** *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:512
+Defined in: node_modules/commander/typings/index.d.ts:309
 
 ___
 
@@ -372,7 +244,7 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:521
+Defined in: node_modules/commander/typings/index.d.ts:318
 
 ▸ **aliases**(): *string*[]
 
@@ -380,33 +252,13 @@ Get aliases for the command.
 
 **Returns:** *string*[]
 
-Defined in: node_modules/commander/typings/index.d.ts:525
-
-___
-
-### allowExcessArguments
-
-▸ **allowExcessArguments**(`allowExcess?`: *boolean*): [*Command*](#interfacesbincommandercommandmd)
-
-Allow excess command-arguments on the command line. Pass false to make excess arguments an error.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`allowExcess?` | *boolean* |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd)
-
-`this` command for chaining
-
-Defined in: node_modules/commander/typings/index.d.ts:415
+Defined in: node_modules/commander/typings/index.d.ts:322
 
 ___
 
 ### allowUnknownOption
 
-▸ **allowUnknownOption**(`allowUnknown?`: *boolean*): [*Command*](#interfacesbincommandercommandmd)
+▸ **allowUnknownOption**(`arg?`: *boolean*): [*Command*](#interfacesbincommandercommandmd)
 
 Allow unknown options on the command line.
 
@@ -414,13 +266,13 @@ Allow unknown options on the command line.
 
 Name | Type |
 :------ | :------ |
-`allowUnknown?` | *boolean* |
+`arg?` | *boolean* |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:408
+Defined in: node_modules/commander/typings/index.d.ts:233
 
 ___
 
@@ -440,13 +292,13 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:241
+Defined in: node_modules/commander/typings/index.d.ts:110
 
 ___
 
 ### combineFlagAndOptionalValue
 
-▸ **combineFlagAndOptionalValue**(`combine?`: *boolean*): [*Command*](#interfacesbincommandercommandmd)
+▸ **combineFlagAndOptionalValue**(`arg?`: *boolean*): [*Command*](#interfacesbincommandercommandmd)
 
 Alter parsing of short flags with optional values.
 
@@ -459,13 +311,13 @@ Alter parsing of short flags with optional values.
 
 Name | Type |
 :------ | :------ |
-`combine?` | *boolean* |
+`arg?` | *boolean* |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:401
+Defined in: node_modules/commander/typings/index.d.ts:225
 
 ___
 
@@ -499,7 +351,7 @@ Name | Type | Description |
 
 new command
 
-Defined in: node_modules/commander/typings/index.d.ts:198
+Defined in: node_modules/commander/typings/index.d.ts:67
 
 ▸ **command**(`nameAndArgs`: *string*, `description`: *string*, `opts?`: [*ExecutableCommandOptions*](#interfacesbincommanderexecutablecommandoptionsmd)): [*Command*](#interfacesbincommandercommandmd)
 
@@ -527,72 +379,7 @@ Name | Type | Description |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:217
-
-___
-
-### configureHelp
-
-▸ **configureHelp**(`configuration`: *Partial*<[*Help*](#interfacesbincommanderhelpmd)\>): [*Command*](#interfacesbincommandercommandmd)
-
-You can customise the help by overriding Help properties using configureHelp(),
-or with a subclass of Help by overriding createHelp().
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`configuration` | *Partial*<[*Help*](#interfacesbincommanderhelpmd)\> |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:269
-
-▸ **configureHelp**(): *Partial*<[*Help*](#interfacesbincommanderhelpmd)\>
-
-Get configuration
-
-**Returns:** *Partial*<[*Help*](#interfacesbincommanderhelpmd)\>
-
-Defined in: node_modules/commander/typings/index.d.ts:271
-
-___
-
-### configureOutput
-
-▸ **configureOutput**(`configuration`: [*OutputConfiguration*](#interfacesbincommanderoutputconfigurationmd)): [*Command*](#interfacesbincommandercommandmd)
-
-The default output goes to stdout and stderr. You can customise this for special
-applications. You can also customise the display of errors by overriding outputError.
-
-The configuration properties are all functions:
-
-   // functions to change where being written, stdout and stderr
-   writeOut(str)
-   writeErr(str)
-   // matching functions to specify width for wrapping help
-   getOutHelpWidth()
-   getErrHelpWidth()
-   // functions based on what is being written out
-   outputError(str, write) // used for displaying errors, and not used for displaying help
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`configuration` | [*OutputConfiguration*](#interfacesbincommanderoutputconfigurationmd) |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:288
-
-▸ **configureOutput**(): [*OutputConfiguration*](#interfacesbincommanderoutputconfigurationmd)
-
-Get configuration
-
-**Returns:** [*OutputConfiguration*](#interfacesbincommanderoutputconfigurationmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:290
+Defined in: node_modules/commander/typings/index.d.ts:86
 
 ___
 
@@ -613,42 +400,7 @@ Name | Type |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:225
-
-___
-
-### createHelp
-
-▸ **createHelp**(): [*Help*](#interfacesbincommanderhelpmd)
-
-You can customise the help with a subclass of Help by overriding createHelp,
-or by overriding Help properties using configureHelp().
-
-**Returns:** [*Help*](#interfacesbincommanderhelpmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:263
-
-___
-
-### createOption
-
-▸ **createOption**(`flags`: *string*, `description?`: *string*): [*Option*](#interfacesbincommanderoptionmd)
-
-Factory routine to create a new unattached option.
-
-See .option() for creating an attached option, which uses this routine to
-create the option. You can override createOption to return a custom option.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`flags` | *string* |
-`description?` | *string* |
-
-**Returns:** [*Option*](#interfacesbincommanderoptionmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:372
+Defined in: node_modules/commander/typings/index.d.ts:94
 
 ___
 
@@ -669,7 +421,7 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:495
+Defined in: node_modules/commander/typings/index.d.ts:292
 
 ▸ **description**(): *string*
 
@@ -677,30 +429,7 @@ Get the description.
 
 **Returns:** *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:499
-
-___
-
-### enablePositionalOptions
-
-▸ **enablePositionalOptions**(`positional?`: *boolean*): [*Command*](#interfacesbincommandercommandmd)
-
-Enable positional options. Positional means global options are specified before subcommands which lets
-subcommands reuse the same option names, and also enables subcommands to turn on passThroughOptions.
-
-The default behaviour is non-positional and global options may appear anywhere on the command line.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`positional?` | *boolean* |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd)
-
-`this` command for chaining
-
-Defined in: node_modules/commander/typings/index.d.ts:425
+Defined in: node_modules/commander/typings/index.d.ts:296
 
 ___
 
@@ -718,31 +447,15 @@ Name | Type |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:257
+Defined in: node_modules/commander/typings/index.d.ts:126
 
 ___
 
 ### help
 
-▸ **help**(`context?`: [*HelpContext*](#interfacesbincommanderhelpcontextmd)): *never*
-
-Output help information and exit.
-
-Outputs built-in help, and custom text added using `.addHelpText()`.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`context?` | [*HelpContext*](#interfacesbincommanderhelpcontextmd) |
-
-**Returns:** *never*
-
-Defined in: node_modules/commander/typings/index.d.ts:576
-
 ▸ **help**(`cb?`: (`str`: *string*) => *string*): *never*
 
-**`deprecated`** since v7
+Output help information and exit.
 
 #### Parameters:
 
@@ -752,25 +465,19 @@ Name | Type |
 
 **Returns:** *never*
 
-Defined in: node_modules/commander/typings/index.d.ts:578
+Defined in: node_modules/commander/typings/index.d.ts:369
 
 ___
 
 ### helpInformation
 
-▸ **helpInformation**(`context?`: [*HelpContext*](#interfacesbincommanderhelpcontextmd)): *string*
+▸ **helpInformation**(): *string*
 
 Return command help documentation.
 
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`context?` | [*HelpContext*](#interfacesbincommanderhelpcontextmd) |
-
 **Returns:** *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:562
+Defined in: node_modules/commander/typings/index.d.ts:357
 
 ___
 
@@ -791,7 +498,7 @@ Name | Type |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:569
+Defined in: node_modules/commander/typings/index.d.ts:364
 
 ___
 
@@ -811,7 +518,7 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:543
+Defined in: node_modules/commander/typings/index.d.ts:340
 
 ▸ **name**(): *string*
 
@@ -819,7 +526,7 @@ Get the name of the command.
 
 **Returns:** *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:547
+Defined in: node_modules/commander/typings/index.d.ts:344
 
 ___
 
@@ -828,6 +535,12 @@ ___
 ▸ **on**(`event`: *string* \| *symbol*, `listener`: (...`args`: *any*[]) => *void*): [*Command*](#interfacesbincommandercommandmd)
 
 Add a listener (callback) for when events occur. (Implemented using EventEmitter.)
+
+**`example`** 
+    program
+      .on('--help', () -> {
+        console.log('See web site for more information.');
+    });
 
 #### Parameters:
 
@@ -838,7 +551,7 @@ Name | Type |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:592
+Defined in: node_modules/commander/typings/index.d.ts:380
 
 ___
 
@@ -849,7 +562,7 @@ ___
 Define option with `flags`, `description` and optional
 coercion `fn`.
 
-The `flags` string contains the short and/or long flags,
+The `flags` string should contain both the short and long flags,
 separated by comma, a pipe or space. The following are all valid
 all will output this way when `--help` is used.
 
@@ -897,7 +610,22 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:349
+Defined in: node_modules/commander/typings/index.d.ts:185
+
+▸ **option**(`flags`: *string*, `description`: *string*, `regexp`: *RegExp*, `defaultValue?`: *string* \| *boolean*): [*Command*](#interfacesbincommandercommandmd)
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`flags` | *string* |
+`description` | *string* |
+`regexp` | *RegExp* |
+`defaultValue?` | *string* \| *boolean* |
+
+**Returns:** [*Command*](#interfacesbincommandercommandmd)
+
+Defined in: node_modules/commander/typings/index.d.ts:186
 
 ▸ **option**<T\>(`flags`: *string*, `description`: *string*, `fn`: (`value`: *string*, `previous`: T) => T, `defaultValue?`: T): [*Command*](#interfacesbincommandercommandmd)
 
@@ -918,60 +646,30 @@ Name | Type |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:350
-
-▸ **option**(`flags`: *string*, `description`: *string*, `regexp`: *RegExp*, `defaultValue?`: *string* \| *boolean*): [*Command*](#interfacesbincommandercommandmd)
-
-**`deprecated`** since v7, instead use choices or a custom function
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`flags` | *string* |
-`description` | *string* |
-`regexp` | *RegExp* |
-`defaultValue?` | *string* \| *boolean* |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:352
+Defined in: node_modules/commander/typings/index.d.ts:187
 
 ___
 
 ### opts
 
-▸ **opts**(): [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
+▸ **opts**(): *object*
 
 Return an object containing options as key-value pairs
 
-**Returns:** [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
+**Returns:** *object*
 
-Defined in: node_modules/commander/typings/index.d.ts:488
+Defined in: node_modules/commander/typings/index.d.ts:285
 
 ___
 
 ### outputHelp
 
-▸ **outputHelp**(`context?`: [*HelpContext*](#interfacesbincommanderhelpcontextmd)): *void*
+▸ **outputHelp**(`cb?`: (`str`: *string*) => *string*): *void*
 
 Output help information for this command.
 
-Outputs built-in help, and custom text added using `.addHelpText()`.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`context?` | [*HelpContext*](#interfacesbincommanderhelpcontextmd) |
-
-**Returns:** *void*
-
-Defined in: node_modules/commander/typings/index.d.ts:555
-
-▸ **outputHelp**(`cb?`: (`str`: *string*) => *string*): *void*
-
-**`deprecated`** since v7
+When listener(s) are available for the helpLongFlag
+those callbacks are invoked.
 
 #### Parameters:
 
@@ -981,7 +679,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: node_modules/commander/typings/index.d.ts:557
+Defined in: node_modules/commander/typings/index.d.ts:352
 
 ___
 
@@ -1011,7 +709,7 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:452
+Defined in: node_modules/commander/typings/index.d.ts:249
 
 ___
 
@@ -1043,7 +741,7 @@ Name | Type |
 
 Promise
 
-Defined in: node_modules/commander/typings/index.d.ts:470
+Defined in: node_modules/commander/typings/index.d.ts:267
 
 ___
 
@@ -1069,31 +767,28 @@ Name | Type |
 
 **Returns:** [*ParseOptionsResult*](#interfacesbincommanderparseoptionsresultmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:483
+Defined in: node_modules/commander/typings/index.d.ts:280
 
 ___
 
-### passThroughOptions
+### passCommandToAction
 
-▸ **passThroughOptions**(`passThrough?`: *boolean*): [*Command*](#interfacesbincommandercommandmd)
+▸ **passCommandToAction**(`value?`: *boolean*): [*Command*](#interfacesbincommandercommandmd)
 
-Pass through options that come after command-arguments rather than treat them as command-options,
-so actual command-options come before command-arguments. Turning this on for a subcommand requires
-positional options to have been enabled on the program (parent commands).
-
-The default behaviour is non-positional and options may appear before or after command-arguments.
+Whether to pass command to action handler,
+or just the options (specify false).
 
 #### Parameters:
 
 Name | Type |
 :------ | :------ |
-`passThrough?` | *boolean* |
+`value?` | *boolean* |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:436
+Defined in: node_modules/commander/typings/index.d.ts:213
 
 ___
 
@@ -1104,7 +799,7 @@ ___
 Define a required option, which must have a value after parsing. This usually means
 the option must be specified on the command line. (Otherwise the same as .option().)
 
-The `flags` string contains the short and/or long flags, separated by comma, a pipe or space.
+The `flags` string should contain both the short and long flags, separated by comma, a pipe or space.
 
 #### Parameters:
 
@@ -1116,7 +811,22 @@ Name | Type |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:360
+Defined in: node_modules/commander/typings/index.d.ts:195
+
+▸ **requiredOption**(`flags`: *string*, `description`: *string*, `regexp`: *RegExp*, `defaultValue?`: *string* \| *boolean*): [*Command*](#interfacesbincommandercommandmd)
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`flags` | *string* |
+`description` | *string* |
+`regexp` | *RegExp* |
+`defaultValue?` | *string* \| *boolean* |
+
+**Returns:** [*Command*](#interfacesbincommandercommandmd)
+
+Defined in: node_modules/commander/typings/index.d.ts:196
 
 ▸ **requiredOption**<T\>(`flags`: *string*, `description`: *string*, `fn`: (`value`: *string*, `previous`: T) => T, `defaultValue?`: T): [*Command*](#interfacesbincommandercommandmd)
 
@@ -1137,63 +847,28 @@ Name | Type |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:361
-
-▸ **requiredOption**(`flags`: *string*, `description`: *string*, `regexp`: *RegExp*, `defaultValue?`: *string* \| *boolean*): [*Command*](#interfacesbincommandercommandmd)
-
-**`deprecated`** since v7, instead use choices or a custom function
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`flags` | *string* |
-`description` | *string* |
-`regexp` | *RegExp* |
-`defaultValue?` | *string* \| *boolean* |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:363
+Defined in: node_modules/commander/typings/index.d.ts:197
 
 ___
 
 ### storeOptionsAsProperties
 
-▸ **storeOptionsAsProperties**(): [*Command*](#interfacesbincommandercommandmd) & [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
+▸ **storeOptionsAsProperties**(`value?`: *boolean*): [*Command*](#interfacesbincommandercommandmd)
 
 Whether to store option values as properties on command object,
 or store separately (specify false). In both cases the option values can be accessed using .opts().
 
-**Returns:** [*Command*](#interfacesbincommandercommandmd) & [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
-
-`this` command for chaining
-
-Defined in: node_modules/commander/typings/index.d.ts:387
-
-▸ **storeOptionsAsProperties**(`storeAsProperties`: *true*): [*Command*](#interfacesbincommandercommandmd) & [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
-
 #### Parameters:
 
 Name | Type |
 :------ | :------ |
-`storeAsProperties` | *true* |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd) & [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:388
-
-▸ **storeOptionsAsProperties**(`storeAsProperties?`: *boolean*): [*Command*](#interfacesbincommandercommandmd)
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`storeAsProperties?` | *boolean* |
+`value?` | *boolean* |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:389
+`this` command for chaining
+
+Defined in: node_modules/commander/typings/index.d.ts:205
 
 ___
 
@@ -1213,7 +888,7 @@ Name | Type |
 
 `this` command for chaining
 
-Defined in: node_modules/commander/typings/index.d.ts:532
+Defined in: node_modules/commander/typings/index.d.ts:329
 
 ▸ **usage**(): *string*
 
@@ -1221,7 +896,7 @@ Get the command usage.
 
 **Returns:** *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:536
+Defined in: node_modules/commander/typings/index.d.ts:333
 
 ___
 
@@ -1246,7 +921,7 @@ Name | Type |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:176
+Defined in: node_modules/commander/typings/index.d.ts:45
 
 
 <a name="interfacesbincommandercommandererrormd"></a>
@@ -1262,8 +937,6 @@ Defined in: node_modules/commander/typings/index.d.ts:176
 * *Error*
 
   ↳ **CommanderError**
-
-  ↳↳ [*InvalidOptionArgumentError*](#interfacesbincommanderinvalidoptionargumenterrormd)
 
 ## Table of contents
 
@@ -1282,7 +955,7 @@ Defined in: node_modules/commander/typings/index.d.ts:176
 
 • **code**: *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:11
+Defined in: node_modules/commander/typings/index.d.ts:7
 
 ___
 
@@ -1290,7 +963,7 @@ ___
 
 • **exitCode**: *number*
 
-Defined in: node_modules/commander/typings/index.d.ts:12
+Defined in: node_modules/commander/typings/index.d.ts:8
 
 ___
 
@@ -1300,7 +973,7 @@ ___
 
 Overrides: void
 
-Defined in: node_modules/commander/typings/index.d.ts:13
+Defined in: node_modules/commander/typings/index.d.ts:9
 
 ___
 
@@ -1318,7 +991,7 @@ ___
 
 • `Optional` **nestedError**: *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:14
+Defined in: node_modules/commander/typings/index.d.ts:10
 
 ___
 
@@ -1351,12 +1024,9 @@ Defined in: node_modules/typescript/lib/lib.es5.d.ts:975
 
 - [Command](#command)
 - [CommanderError](#commandererror)
-- [Help](#help)
-- [InvalidOptionArgumentError](#invalidoptionargumenterror)
 - [Option](#option)
 - [args](#args)
 - [commands](#commands)
-- [parent](#parent)
 - [program](#program)
 
 ### Methods
@@ -1364,22 +1034,14 @@ Defined in: node_modules/typescript/lib/lib.es5.d.ts:975
 - [action](#action)
 - [addCommand](#addcommand)
 - [addHelpCommand](#addhelpcommand)
-- [addHelpText](#addhelptext)
-- [addOption](#addoption)
 - [alias](#alias)
 - [aliases](#aliases)
-- [allowExcessArguments](#allowexcessarguments)
 - [allowUnknownOption](#allowunknownoption)
 - [arguments](#arguments)
 - [combineFlagAndOptionalValue](#combineflagandoptionalvalue)
 - [command](#command)
-- [configureHelp](#configurehelp)
-- [configureOutput](#configureoutput)
 - [createCommand](#createcommand)
-- [createHelp](#createhelp)
-- [createOption](#createoption)
 - [description](#description)
-- [enablePositionalOptions](#enablepositionaloptions)
 - [exitOverride](#exitoverride)
 - [help](#help)
 - [helpInformation](#helpinformation)
@@ -1392,7 +1054,7 @@ Defined in: node_modules/typescript/lib/lib.es5.d.ts:975
 - [parse](#parse)
 - [parseAsync](#parseasync)
 - [parseOptions](#parseoptions)
-- [passThroughOptions](#passthroughoptions)
+- [passCommandToAction](#passcommandtoaction)
 - [requiredOption](#requiredoption)
 - [storeOptionsAsProperties](#storeoptionsasproperties)
 - [usage](#usage)
@@ -1404,7 +1066,7 @@ Defined in: node_modules/typescript/lib/lib.es5.d.ts:975
 
 • **Command**: [*CommandConstructor*](#commandconstructor)
 
-Defined in: node_modules/commander/typings/index.d.ts:615
+Defined in: node_modules/commander/typings/index.d.ts:400
 
 ___
 
@@ -1412,23 +1074,7 @@ ___
 
 • **CommanderError**: [*CommanderErrorConstructor*](#commandererrorconstructor)
 
-Defined in: node_modules/commander/typings/index.d.ts:617
-
-___
-
-### Help
-
-• **Help**: [*HelpConstructor*](#helpconstructor)
-
-Defined in: node_modules/commander/typings/index.d.ts:619
-
-___
-
-### InvalidOptionArgumentError
-
-• **InvalidOptionArgumentError**: [*InvalidOptionArgumentErrorConstructor*](#invalidoptionargumenterrorconstructor)
-
-Defined in: node_modules/commander/typings/index.d.ts:618
+Defined in: node_modules/commander/typings/index.d.ts:402
 
 ___
 
@@ -1436,7 +1082,7 @@ ___
 
 • **Option**: [*OptionConstructor*](#optionconstructor)
 
-Defined in: node_modules/commander/typings/index.d.ts:616
+Defined in: node_modules/commander/typings/index.d.ts:401
 
 ___
 
@@ -1446,7 +1092,7 @@ ___
 
 Inherited from: [Command](#interfacesbincommandercommandmd).[args](#args)
 
-Defined in: node_modules/commander/typings/index.d.ts:164
+Defined in: node_modules/commander/typings/index.d.ts:33
 
 ___
 
@@ -1456,17 +1102,7 @@ ___
 
 Inherited from: [Command](#interfacesbincommandercommandmd).[commands](#commands)
 
-Defined in: node_modules/commander/typings/index.d.ts:165
-
-___
-
-### parent
-
-• **parent**: *null* \| [*Command*](#interfacesbincommandercommandmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd).[parent](#parent)
-
-Defined in: node_modules/commander/typings/index.d.ts:166
+Defined in: node_modules/commander/typings/index.d.ts:35
 
 ___
 
@@ -1474,7 +1110,7 @@ ___
 
 • **program**: [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:614
+Defined in: node_modules/commander/typings/index.d.ts:399
 
 ## Methods
 
@@ -1504,7 +1140,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:305
+Defined in: node_modules/commander/typings/index.d.ts:141
 
 ___
 
@@ -1529,7 +1165,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:234
+Defined in: node_modules/commander/typings/index.d.ts:103
 
 ___
 
@@ -1556,68 +1192,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:252
-
-___
-
-### addHelpText
-
-▸ **addHelpText**(`position`: [*AddHelpTextPosition*](#addhelptextposition), `text`: *string*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Add additional text to be displayed with the built-in help.
-
-Position is 'before' or 'after' to affect just this command,
-and 'beforeAll' or 'afterAll' to affect this command and all its subcommands.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`position` | [*AddHelpTextPosition*](#addhelptextposition) |
-`text` | *string* |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:586
-
-▸ **addHelpText**(`position`: [*AddHelpTextPosition*](#addhelptextposition), `text`: (`context`: [*AddHelpTextContext*](#interfacesbincommanderaddhelptextcontextmd)) => *undefined* \| *string*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`position` | [*AddHelpTextPosition*](#addhelptextposition) |
-`text` | (`context`: [*AddHelpTextContext*](#interfacesbincommanderaddhelptextcontextmd)) => *undefined* \| *string* |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:587
-
-___
-
-### addOption
-
-▸ **addOption**(`option`: [*Option*](#interfacesbincommanderoptionmd)): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Add a prepared Option.
-
-See .option() and .requiredOption() for creating and attaching an option in a single call.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`option` | [*Option*](#interfacesbincommanderoptionmd) |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:379
+Defined in: node_modules/commander/typings/index.d.ts:121
 
 ___
 
@@ -1641,7 +1216,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:508
+Defined in: node_modules/commander/typings/index.d.ts:305
 
 ▸ **alias**(): *string*
 
@@ -1651,7 +1226,7 @@ Get alias for the command.
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:512
+Defined in: node_modules/commander/typings/index.d.ts:309
 
 ___
 
@@ -1675,7 +1250,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:521
+Defined in: node_modules/commander/typings/index.d.ts:318
 
 ▸ **aliases**(): *string*[]
 
@@ -1685,35 +1260,13 @@ Get aliases for the command.
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:525
-
-___
-
-### allowExcessArguments
-
-▸ **allowExcessArguments**(`allowExcess?`: *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Allow excess command-arguments on the command line. Pass false to make excess arguments an error.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`allowExcess?` | *boolean* |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-`this` command for chaining
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:415
+Defined in: node_modules/commander/typings/index.d.ts:322
 
 ___
 
 ### allowUnknownOption
 
-▸ **allowUnknownOption**(`allowUnknown?`: *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
+▸ **allowUnknownOption**(`arg?`: *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
 Allow unknown options on the command line.
 
@@ -1721,7 +1274,7 @@ Allow unknown options on the command line.
 
 Name | Type |
 :------ | :------ |
-`allowUnknown?` | *boolean* |
+`arg?` | *boolean* |
 
 **Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
@@ -1729,7 +1282,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:408
+Defined in: node_modules/commander/typings/index.d.ts:233
 
 ___
 
@@ -1751,13 +1304,13 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:241
+Defined in: node_modules/commander/typings/index.d.ts:110
 
 ___
 
 ### combineFlagAndOptionalValue
 
-▸ **combineFlagAndOptionalValue**(`combine?`: *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
+▸ **combineFlagAndOptionalValue**(`arg?`: *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
 Alter parsing of short flags with optional values.
 
@@ -1770,7 +1323,7 @@ Alter parsing of short flags with optional values.
 
 Name | Type |
 :------ | :------ |
-`combine?` | *boolean* |
+`arg?` | *boolean* |
 
 **Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
@@ -1778,7 +1331,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:401
+Defined in: node_modules/commander/typings/index.d.ts:225
 
 ___
 
@@ -1814,7 +1367,7 @@ new command
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:198
+Defined in: node_modules/commander/typings/index.d.ts:67
 
 ▸ **command**(`nameAndArgs`: *string*, `description`: *string*, `opts?`: [*ExecutableCommandOptions*](#interfacesbincommanderexecutablecommandoptionsmd)): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
@@ -1844,80 +1397,7 @@ Name | Type | Description |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:217
-
-___
-
-### configureHelp
-
-▸ **configureHelp**(`configuration`: *Partial*<[*Help*](#interfacesbincommanderhelpmd)\>): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-You can customise the help by overriding Help properties using configureHelp(),
-or with a subclass of Help by overriding createHelp().
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`configuration` | *Partial*<[*Help*](#interfacesbincommanderhelpmd)\> |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:269
-
-▸ **configureHelp**(): *Partial*<[*Help*](#interfacesbincommanderhelpmd)\>
-
-Get configuration
-
-**Returns:** *Partial*<[*Help*](#interfacesbincommanderhelpmd)\>
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:271
-
-___
-
-### configureOutput
-
-▸ **configureOutput**(`configuration`: [*OutputConfiguration*](#interfacesbincommanderoutputconfigurationmd)): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-The default output goes to stdout and stderr. You can customise this for special
-applications. You can also customise the display of errors by overriding outputError.
-
-The configuration properties are all functions:
-
-   // functions to change where being written, stdout and stderr
-   writeOut(str)
-   writeErr(str)
-   // matching functions to specify width for wrapping help
-   getOutHelpWidth()
-   getErrHelpWidth()
-   // functions based on what is being written out
-   outputError(str, write) // used for displaying errors, and not used for displaying help
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`configuration` | [*OutputConfiguration*](#interfacesbincommanderoutputconfigurationmd) |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:288
-
-▸ **configureOutput**(): [*OutputConfiguration*](#interfacesbincommanderoutputconfigurationmd)
-
-Get configuration
-
-**Returns:** [*OutputConfiguration*](#interfacesbincommanderoutputconfigurationmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:290
+Defined in: node_modules/commander/typings/index.d.ts:86
 
 ___
 
@@ -1940,46 +1420,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:225
-
-___
-
-### createHelp
-
-▸ **createHelp**(): [*Help*](#interfacesbincommanderhelpmd)
-
-You can customise the help with a subclass of Help by overriding createHelp,
-or by overriding Help properties using configureHelp().
-
-**Returns:** [*Help*](#interfacesbincommanderhelpmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:263
-
-___
-
-### createOption
-
-▸ **createOption**(`flags`: *string*, `description?`: *string*): [*Option*](#interfacesbincommanderoptionmd)
-
-Factory routine to create a new unattached option.
-
-See .option() for creating an attached option, which uses this routine to
-create the option. You can override createOption to return a custom option.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`flags` | *string* |
-`description?` | *string* |
-
-**Returns:** [*Option*](#interfacesbincommanderoptionmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:372
+Defined in: node_modules/commander/typings/index.d.ts:94
 
 ___
 
@@ -2002,7 +1443,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:495
+Defined in: node_modules/commander/typings/index.d.ts:292
 
 ▸ **description**(): *string*
 
@@ -2012,32 +1453,7 @@ Get the description.
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:499
-
-___
-
-### enablePositionalOptions
-
-▸ **enablePositionalOptions**(`positional?`: *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Enable positional options. Positional means global options are specified before subcommands which lets
-subcommands reuse the same option names, and also enables subcommands to turn on passThroughOptions.
-
-The default behaviour is non-positional and global options may appear anywhere on the command line.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`positional?` | *boolean* |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-`this` command for chaining
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:425
+Defined in: node_modules/commander/typings/index.d.ts:296
 
 ___
 
@@ -2057,33 +1473,15 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:257
+Defined in: node_modules/commander/typings/index.d.ts:126
 
 ___
 
 ### help
 
-▸ **help**(`context?`: [*HelpContext*](#interfacesbincommanderhelpcontextmd)): *never*
-
-Output help information and exit.
-
-Outputs built-in help, and custom text added using `.addHelpText()`.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`context?` | [*HelpContext*](#interfacesbincommanderhelpcontextmd) |
-
-**Returns:** *never*
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:576
-
 ▸ **help**(`cb?`: (`str`: *string*) => *string*): *never*
 
-**`deprecated`** since v7
+Output help information and exit.
 
 #### Parameters:
 
@@ -2095,27 +1493,21 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:578
+Defined in: node_modules/commander/typings/index.d.ts:369
 
 ___
 
 ### helpInformation
 
-▸ **helpInformation**(`context?`: [*HelpContext*](#interfacesbincommanderhelpcontextmd)): *string*
+▸ **helpInformation**(): *string*
 
 Return command help documentation.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`context?` | [*HelpContext*](#interfacesbincommanderhelpcontextmd) |
 
 **Returns:** *string*
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:562
+Defined in: node_modules/commander/typings/index.d.ts:357
 
 ___
 
@@ -2138,7 +1530,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:569
+Defined in: node_modules/commander/typings/index.d.ts:364
 
 ___
 
@@ -2160,7 +1552,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:543
+Defined in: node_modules/commander/typings/index.d.ts:340
 
 ▸ **name**(): *string*
 
@@ -2170,7 +1562,7 @@ Get the name of the command.
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:547
+Defined in: node_modules/commander/typings/index.d.ts:344
 
 ___
 
@@ -2179,6 +1571,12 @@ ___
 ▸ **on**(`event`: *string* \| *symbol*, `listener`: (...`args`: *any*[]) => *void*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
 Add a listener (callback) for when events occur. (Implemented using EventEmitter.)
+
+**`example`** 
+    program
+      .on('--help', () -> {
+        console.log('See web site for more information.');
+    });
 
 #### Parameters:
 
@@ -2191,7 +1589,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:592
+Defined in: node_modules/commander/typings/index.d.ts:380
 
 ___
 
@@ -2202,7 +1600,7 @@ ___
 Define option with `flags`, `description` and optional
 coercion `fn`.
 
-The `flags` string contains the short and/or long flags,
+The `flags` string should contain both the short and long flags,
 separated by comma, a pipe or space. The following are all valid
 all will output this way when `--help` is used.
 
@@ -2252,7 +1650,24 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:349
+Defined in: node_modules/commander/typings/index.d.ts:185
+
+▸ **option**(`flags`: *string*, `description`: *string*, `regexp`: *RegExp*, `defaultValue?`: *string* \| *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`flags` | *string* |
+`description` | *string* |
+`regexp` | *RegExp* |
+`defaultValue?` | *string* \| *boolean* |
+
+**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
+
+Inherited from: [Command](#interfacesbincommandercommandmd)
+
+Defined in: node_modules/commander/typings/index.d.ts:186
 
 ▸ **option**<T\>(`flags`: *string*, `description`: *string*, `fn`: (`value`: *string*, `previous`: T) => T, `defaultValue?`: T): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
@@ -2275,66 +1690,32 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:350
-
-▸ **option**(`flags`: *string*, `description`: *string*, `regexp`: *RegExp*, `defaultValue?`: *string* \| *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-**`deprecated`** since v7, instead use choices or a custom function
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`flags` | *string* |
-`description` | *string* |
-`regexp` | *RegExp* |
-`defaultValue?` | *string* \| *boolean* |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:352
+Defined in: node_modules/commander/typings/index.d.ts:187
 
 ___
 
 ### opts
 
-▸ **opts**(): [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
+▸ **opts**(): *object*
 
 Return an object containing options as key-value pairs
 
-**Returns:** [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
+**Returns:** *object*
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:488
+Defined in: node_modules/commander/typings/index.d.ts:285
 
 ___
 
 ### outputHelp
 
-▸ **outputHelp**(`context?`: [*HelpContext*](#interfacesbincommanderhelpcontextmd)): *void*
+▸ **outputHelp**(`cb?`: (`str`: *string*) => *string*): *void*
 
 Output help information for this command.
 
-Outputs built-in help, and custom text added using `.addHelpText()`.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`context?` | [*HelpContext*](#interfacesbincommanderhelpcontextmd) |
-
-**Returns:** *void*
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:555
-
-▸ **outputHelp**(`cb?`: (`str`: *string*) => *string*): *void*
-
-**`deprecated`** since v7
+When listener(s) are available for the helpLongFlag
+those callbacks are invoked.
 
 #### Parameters:
 
@@ -2346,7 +1727,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:557
+Defined in: node_modules/commander/typings/index.d.ts:352
 
 ___
 
@@ -2378,7 +1759,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:452
+Defined in: node_modules/commander/typings/index.d.ts:249
 
 ___
 
@@ -2412,7 +1793,7 @@ Promise
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:470
+Defined in: node_modules/commander/typings/index.d.ts:267
 
 ___
 
@@ -2440,25 +1821,22 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:483
+Defined in: node_modules/commander/typings/index.d.ts:280
 
 ___
 
-### passThroughOptions
+### passCommandToAction
 
-▸ **passThroughOptions**(`passThrough?`: *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
+▸ **passCommandToAction**(`value?`: *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
-Pass through options that come after command-arguments rather than treat them as command-options,
-so actual command-options come before command-arguments. Turning this on for a subcommand requires
-positional options to have been enabled on the program (parent commands).
-
-The default behaviour is non-positional and options may appear before or after command-arguments.
+Whether to pass command to action handler,
+or just the options (specify false).
 
 #### Parameters:
 
 Name | Type |
 :------ | :------ |
-`passThrough?` | *boolean* |
+`value?` | *boolean* |
 
 **Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
@@ -2466,7 +1844,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:436
+Defined in: node_modules/commander/typings/index.d.ts:213
 
 ___
 
@@ -2477,7 +1855,7 @@ ___
 Define a required option, which must have a value after parsing. This usually means
 the option must be specified on the command line. (Otherwise the same as .option().)
 
-The `flags` string contains the short and/or long flags, separated by comma, a pipe or space.
+The `flags` string should contain both the short and long flags, separated by comma, a pipe or space.
 
 #### Parameters:
 
@@ -2491,7 +1869,24 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:360
+Defined in: node_modules/commander/typings/index.d.ts:195
+
+▸ **requiredOption**(`flags`: *string*, `description`: *string*, `regexp`: *RegExp*, `defaultValue?`: *string* \| *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`flags` | *string* |
+`description` | *string* |
+`regexp` | *RegExp* |
+`defaultValue?` | *string* \| *boolean* |
+
+**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
+
+Inherited from: [Command](#interfacesbincommandercommandmd)
+
+Defined in: node_modules/commander/typings/index.d.ts:196
 
 ▸ **requiredOption**<T\>(`flags`: *string*, `description`: *string*, `fn`: (`value`: *string*, `previous`: T) => T, `defaultValue?`: T): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
@@ -2514,71 +1909,30 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:361
-
-▸ **requiredOption**(`flags`: *string*, `description`: *string*, `regexp`: *RegExp*, `defaultValue?`: *string* \| *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-**`deprecated`** since v7, instead use choices or a custom function
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`flags` | *string* |
-`description` | *string* |
-`regexp` | *RegExp* |
-`defaultValue?` | *string* \| *boolean* |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:363
+Defined in: node_modules/commander/typings/index.d.ts:197
 
 ___
 
 ### storeOptionsAsProperties
 
-▸ **storeOptionsAsProperties**(): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd) & [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
+▸ **storeOptionsAsProperties**(`value?`: *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
 Whether to store option values as properties on command object,
 or store separately (specify false). In both cases the option values can be accessed using .opts().
 
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd) & [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`value?` | *boolean* |
+
+**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
 `this` command for chaining
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:387
-
-▸ **storeOptionsAsProperties**(`storeAsProperties`: *true*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd) & [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`storeAsProperties` | *true* |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd) & [*OptionValues*](#interfacesbincommanderoptionvaluesmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:388
-
-▸ **storeOptionsAsProperties**(`storeAsProperties?`: *boolean*): [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`storeAsProperties?` | *boolean* |
-
-**Returns:** [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
-
-Inherited from: [Command](#interfacesbincommandercommandmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:389
+Defined in: node_modules/commander/typings/index.d.ts:205
 
 ___
 
@@ -2600,7 +1954,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:532
+Defined in: node_modules/commander/typings/index.d.ts:329
 
 ▸ **usage**(): *string*
 
@@ -2610,7 +1964,7 @@ Get the command usage.
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:536
+Defined in: node_modules/commander/typings/index.d.ts:333
 
 ___
 
@@ -2637,7 +1991,7 @@ Name | Type |
 
 Inherited from: [Command](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:176
+Defined in: node_modules/commander/typings/index.d.ts:45
 
 
 <a name="interfacesbincommandercommandoptionsmd"></a>
@@ -2668,7 +2022,7 @@ Defined in: node_modules/commander/typings/index.d.ts:176
 
 • `Optional` **hidden**: *boolean*
 
-Defined in: node_modules/commander/typings/index.d.ts:597
+Defined in: node_modules/commander/typings/index.d.ts:386
 
 ___
 
@@ -2676,7 +2030,7 @@ ___
 
 • `Optional` **isDefault**: *boolean*
 
-Defined in: node_modules/commander/typings/index.d.ts:598
+Defined in: node_modules/commander/typings/index.d.ts:387
 
 ___
 
@@ -2684,9 +2038,7 @@ ___
 
 • `Optional` **noHelp**: *boolean*
 
-**`deprecated`** since v7, replaced by hidden
-
-Defined in: node_modules/commander/typings/index.d.ts:600
+Defined in: node_modules/commander/typings/index.d.ts:385
 
 
 <a name="interfacesbincommanderexecutablecommandoptionsmd"></a>
@@ -2718,7 +2070,7 @@ Defined in: node_modules/commander/typings/index.d.ts:600
 
 • `Optional` **executableFile**: *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:603
+Defined in: node_modules/commander/typings/index.d.ts:390
 
 ___
 
@@ -2728,7 +2080,7 @@ ___
 
 Inherited from: [CommandOptions](#interfacesbincommandercommandoptionsmd).[hidden](#hidden)
 
-Defined in: node_modules/commander/typings/index.d.ts:597
+Defined in: node_modules/commander/typings/index.d.ts:386
 
 ___
 
@@ -2738,7 +2090,7 @@ ___
 
 Inherited from: [CommandOptions](#interfacesbincommandercommandoptionsmd).[isDefault](#isdefault)
 
-Defined in: node_modules/commander/typings/index.d.ts:598
+Defined in: node_modules/commander/typings/index.d.ts:387
 
 ___
 
@@ -2746,460 +2098,9 @@ ___
 
 • `Optional` **noHelp**: *boolean*
 
-**`deprecated`** since v7, replaced by hidden
-
 Inherited from: [CommandOptions](#interfacesbincommandercommandoptionsmd).[noHelp](#nohelp)
 
-Defined in: node_modules/commander/typings/index.d.ts:600
-
-
-<a name="interfacesbincommanderhelpmd"></a>
-
-[@raydeck/interval-manager - v1.0.0](#readmemd) / [bin](#modulesbinmd) / [commander](#modulesbincommandermd) / Help
-
-# Interface: Help
-
-[bin](#modulesbinmd).[commander](#modulesbincommandermd).Help
-
-## Table of contents
-
-### Properties
-
-- [helpWidth](#helpwidth)
-- [sortOptions](#sortoptions)
-- [sortSubcommands](#sortsubcommands)
-
-### Methods
-
-- [commandDescription](#commanddescription)
-- [commandUsage](#commandusage)
-- [formatHelp](#formathelp)
-- [longestArgumentTermLength](#longestargumenttermlength)
-- [longestOptionTermLength](#longestoptiontermlength)
-- [longestSubcommandTermLength](#longestsubcommandtermlength)
-- [optionDescription](#optiondescription)
-- [optionTerm](#optionterm)
-- [padWidth](#padwidth)
-- [subcommandDescription](#subcommanddescription)
-- [subcommandTerm](#subcommandterm)
-- [visibleArguments](#visiblearguments)
-- [visibleCommands](#visiblecommands)
-- [visibleOptions](#visibleoptions)
-- [wrap](#wrap)
-
-## Properties
-
-### helpWidth
-
-• `Optional` **helpWidth**: *number*
-
-output helpWidth, long lines are wrapped to fit
-
-Defined in: node_modules/commander/typings/index.d.ts:92
-
-___
-
-### sortOptions
-
-• **sortOptions**: *boolean*
-
-Defined in: node_modules/commander/typings/index.d.ts:94
-
-___
-
-### sortSubcommands
-
-• **sortSubcommands**: *boolean*
-
-Defined in: node_modules/commander/typings/index.d.ts:93
-
-## Methods
-
-### commandDescription
-
-▸ **commandDescription**(`cmd`: [*Command*](#interfacesbincommandercommandmd)): *string*
-
-Get the description for the command.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:108
-
-___
-
-### commandUsage
-
-▸ **commandUsage**(`cmd`: [*Command*](#interfacesbincommandercommandmd)): *string*
-
-Get the command usage to be displayed at the top of the built-in help.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:106
-
-___
-
-### formatHelp
-
-▸ **formatHelp**(`cmd`: [*Command*](#interfacesbincommandercommandmd), `helper`: [*Help*](#interfacesbincommanderhelpmd)): *string*
-
-Generate the built-in help text.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-`helper` | [*Help*](#interfacesbincommanderhelpmd) |
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:133
-
-___
-
-### longestArgumentTermLength
-
-▸ **longestArgumentTermLength**(`cmd`: [*Command*](#interfacesbincommandercommandmd), `helper`: [*Help*](#interfacesbincommanderhelpmd)): *number*
-
-Get the longest argument term length.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-`helper` | [*Help*](#interfacesbincommanderhelpmd) |
-
-**Returns:** *number*
-
-Defined in: node_modules/commander/typings/index.d.ts:122
-
-___
-
-### longestOptionTermLength
-
-▸ **longestOptionTermLength**(`cmd`: [*Command*](#interfacesbincommandercommandmd), `helper`: [*Help*](#interfacesbincommanderhelpmd)): *number*
-
-Get the longest option term length.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-`helper` | [*Help*](#interfacesbincommanderhelpmd) |
-
-**Returns:** *number*
-
-Defined in: node_modules/commander/typings/index.d.ts:120
-
-___
-
-### longestSubcommandTermLength
-
-▸ **longestSubcommandTermLength**(`cmd`: [*Command*](#interfacesbincommandercommandmd), `helper`: [*Help*](#interfacesbincommanderhelpmd)): *number*
-
-Get the longest command term length.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-`helper` | [*Help*](#interfacesbincommanderhelpmd) |
-
-**Returns:** *number*
-
-Defined in: node_modules/commander/typings/index.d.ts:118
-
-___
-
-### optionDescription
-
-▸ **optionDescription**(`option`: [*Option*](#interfacesbincommanderoptionmd)): *string*
-
-Get the option description to show in the list of options.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`option` | [*Option*](#interfacesbincommanderoptionmd) |
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:103
-
-___
-
-### optionTerm
-
-▸ **optionTerm**(`option`: [*Option*](#interfacesbincommanderoptionmd)): *string*
-
-Get the option term to show in the list of options.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`option` | [*Option*](#interfacesbincommanderoptionmd) |
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:101
-
-___
-
-### padWidth
-
-▸ **padWidth**(`cmd`: [*Command*](#interfacesbincommandercommandmd), `helper`: [*Help*](#interfacesbincommanderhelpmd)): *number*
-
-Calculate the pad width from the maximum term length.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-`helper` | [*Help*](#interfacesbincommanderhelpmd) |
-
-**Returns:** *number*
-
-Defined in: node_modules/commander/typings/index.d.ts:124
-
-___
-
-### subcommandDescription
-
-▸ **subcommandDescription**(`cmd`: [*Command*](#interfacesbincommandercommandmd)): *string*
-
-Get the command description to show in the list of subcommands.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:99
-
-___
-
-### subcommandTerm
-
-▸ **subcommandTerm**(`cmd`: [*Command*](#interfacesbincommandercommandmd)): *string*
-
-Get the command term to show in the list of subcommands.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:97
-
-___
-
-### visibleArguments
-
-▸ **visibleArguments**(`cmd`: [*Command*](#interfacesbincommandercommandmd)): { `description`: *string* ; `term`: *string*  }[]
-
-Get an array of the arguments which have descriptions.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-
-**Returns:** { `description`: *string* ; `term`: *string*  }[]
-
-Defined in: node_modules/commander/typings/index.d.ts:115
-
-___
-
-### visibleCommands
-
-▸ **visibleCommands**(`cmd`: [*Command*](#interfacesbincommandercommandmd)): [*Command*](#interfacesbincommandercommandmd)[]
-
-Get an array of the visible subcommands. Includes a placeholder for the implicit help command, if there is one.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-
-**Returns:** [*Command*](#interfacesbincommandercommandmd)[]
-
-Defined in: node_modules/commander/typings/index.d.ts:111
-
-___
-
-### visibleOptions
-
-▸ **visibleOptions**(`cmd`: [*Command*](#interfacesbincommandercommandmd)): [*Option*](#interfacesbincommanderoptionmd)[]
-
-Get an array of the visible options. Includes a placeholder for the implicit help option, if there is one.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`cmd` | [*Command*](#interfacesbincommandercommandmd) |
-
-**Returns:** [*Option*](#interfacesbincommanderoptionmd)[]
-
-Defined in: node_modules/commander/typings/index.d.ts:113
-
-___
-
-### wrap
-
-▸ **wrap**(`str`: *string*, `width`: *number*, `indent`: *number*, `minColumnWidth?`: *number*): *string*
-
-Wrap the given string to width characters per line, with lines after the first indented.
-Do not wrap if insufficient room for wrapping (minColumnWidth), or string is manually formatted.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`str` | *string* |
-`width` | *number* |
-`indent` | *number* |
-`minColumnWidth?` | *number* |
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:130
-
-
-<a name="interfacesbincommanderhelpcontextmd"></a>
-
-[@raydeck/interval-manager - v1.0.0](#readmemd) / [bin](#modulesbinmd) / [commander](#modulesbincommandermd) / HelpContext
-
-# Interface: HelpContext
-
-[bin](#modulesbinmd).[commander](#modulesbincommandermd).HelpContext
-
-## Table of contents
-
-### Properties
-
-- [error](#error)
-
-## Properties
-
-### error
-
-• **error**: *boolean*
-
-Defined in: node_modules/commander/typings/index.d.ts:142
-
-
-<a name="interfacesbincommanderinvalidoptionargumenterrormd"></a>
-
-[@raydeck/interval-manager - v1.0.0](#readmemd) / [bin](#modulesbinmd) / [commander](#modulesbincommandermd) / InvalidOptionArgumentError
-
-# Interface: InvalidOptionArgumentError
-
-[bin](#modulesbinmd).[commander](#modulesbincommandermd).InvalidOptionArgumentError
-
-## Hierarchy
-
-* [*CommanderError*](#interfacesbincommandercommandererrormd)
-
-  ↳ **InvalidOptionArgumentError**
-
-## Table of contents
-
-### Properties
-
-- [code](#code)
-- [exitCode](#exitcode)
-- [message](#message)
-- [name](#name)
-- [nestedError](#nestederror)
-- [stack](#stack)
-
-## Properties
-
-### code
-
-• **code**: *string*
-
-Inherited from: [CommanderError](#interfacesbincommandercommandererrormd).[code](#code)
-
-Defined in: node_modules/commander/typings/index.d.ts:11
-
-___
-
-### exitCode
-
-• **exitCode**: *number*
-
-Inherited from: [CommanderError](#interfacesbincommandercommandererrormd).[exitCode](#exitcode)
-
-Defined in: node_modules/commander/typings/index.d.ts:12
-
-___
-
-### message
-
-• **message**: *string*
-
-Inherited from: [CommanderError](#interfacesbincommandercommandererrormd).[message](#message)
-
-Defined in: node_modules/commander/typings/index.d.ts:13
-
-___
-
-### name
-
-• **name**: *string*
-
-Inherited from: [CommanderError](#interfacesbincommandercommandererrormd).[name](#name)
-
-Defined in: node_modules/typescript/lib/lib.es5.d.ts:973
-
-___
-
-### nestedError
-
-• `Optional` **nestedError**: *string*
-
-Inherited from: [CommanderError](#interfacesbincommandercommandererrormd).[nestedError](#nestederror)
-
-Defined in: node_modules/commander/typings/index.d.ts:14
-
-___
-
-### stack
-
-• `Optional` **stack**: *string*
-
-Inherited from: [CommanderError](#interfacesbincommandercommandererrormd).[stack](#stack)
-
-Defined in: node_modules/typescript/lib/lib.es5.d.ts:975
+Defined in: node_modules/commander/typings/index.d.ts:385
 
 
 <a name="interfacesbincommanderoptionmd"></a>
@@ -3214,57 +2115,22 @@ Defined in: node_modules/typescript/lib/lib.es5.d.ts:975
 
 ### Properties
 
-- [argChoices](#argchoices)
-- [defaultValue](#defaultvalue)
-- [defaultValueDescription](#defaultvaluedescription)
+- [bool](#bool)
 - [description](#description)
 - [flags](#flags)
-- [hidden](#hidden)
 - [long](#long)
 - [mandatory](#mandatory)
-- [negate](#negate)
-- [optionFlags](#optionflags)
 - [optional](#optional)
-- [parseArg](#parsearg)
 - [required](#required)
 - [short](#short)
-- [variadic](#variadic)
-
-### Methods
-
-- [argParser](#argparser)
-- [argumentRejected](#argumentrejected)
-- [attributeName](#attributename)
-- [choices](#choices)
-- [default](#default)
-- [fullDescription](#fulldescription)
-- [hideHelp](#hidehelp)
-- [makeOptionMandatory](#makeoptionmandatory)
-- [name](#name)
 
 ## Properties
 
-### argChoices
+### bool
 
-• `Optional` **argChoices**: *string*[]
+• **bool**: *boolean*
 
-Defined in: node_modules/commander/typings/index.d.ts:39
-
-___
-
-### defaultValue
-
-• `Optional` **defaultValue**: *any*
-
-Defined in: node_modules/commander/typings/index.d.ts:35
-
-___
-
-### defaultValueDescription
-
-• `Optional` **defaultValueDescription**: *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:36
+Defined in: node_modules/commander/typings/index.d.ts:19
 
 ___
 
@@ -3272,7 +2138,7 @@ ___
 
 • **description**: *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:25
+Defined in: node_modules/commander/typings/index.d.ts:22
 
 ___
 
@@ -3280,23 +2146,15 @@ ___
 
 • **flags**: *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:24
-
-___
-
-### hidden
-
-• **hidden**: *boolean*
-
-Defined in: node_modules/commander/typings/index.d.ts:38
+Defined in: node_modules/commander/typings/index.d.ts:15
 
 ___
 
 ### long
 
-• `Optional` **long**: *string*
+• **long**: *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:33
+Defined in: node_modules/commander/typings/index.d.ts:21
 
 ___
 
@@ -3304,23 +2162,7 @@ ___
 
 • **mandatory**: *boolean*
 
-Defined in: node_modules/commander/typings/index.d.ts:30
-
-___
-
-### negate
-
-• **negate**: *boolean*
-
-Defined in: node_modules/commander/typings/index.d.ts:34
-
-___
-
-### optionFlags
-
-• **optionFlags**: *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:31
+Defined in: node_modules/commander/typings/index.d.ts:18
 
 ___
 
@@ -3328,36 +2170,7 @@ ___
 
 • **optional**: *boolean*
 
-Defined in: node_modules/commander/typings/index.d.ts:28
-
-___
-
-### parseArg
-
-• `Optional` **parseArg**: <T\>(`value`: *string*, `previous`: T) => T
-
-#### Type declaration:
-
-▸ <T\>(`value`: *string*, `previous`: T): T
-
-#### Type parameters:
-
-Name |
-:------ |
-`T` |
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`value` | *string* |
-`previous` | T |
-
-**Returns:** T
-
-Defined in: node_modules/commander/typings/index.d.ts:37
-
-Defined in: node_modules/commander/typings/index.d.ts:37
+Defined in: node_modules/commander/typings/index.d.ts:17
 
 ___
 
@@ -3365,7 +2178,7 @@ ___
 
 • **required**: *boolean*
 
-Defined in: node_modules/commander/typings/index.d.ts:27
+Defined in: node_modules/commander/typings/index.d.ts:16
 
 ___
 
@@ -3373,269 +2186,7 @@ ___
 
 • `Optional` **short**: *string*
 
-Defined in: node_modules/commander/typings/index.d.ts:32
-
-___
-
-### variadic
-
-• **variadic**: *boolean*
-
-Defined in: node_modules/commander/typings/index.d.ts:29
-
-## Methods
-
-### argParser
-
-▸ **argParser**<T\>(`fn`: (`value`: *string*, `previous`: T) => T): [*Option*](#interfacesbincommanderoptionmd)
-
-Set the custom handler for processing CLI option arguments into option values.
-
-#### Type parameters:
-
-Name |
-:------ |
-`T` |
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`fn` | (`value`: *string*, `previous`: T) => T |
-
-**Returns:** [*Option*](#interfacesbincommanderoptionmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:54
-
-___
-
-### argumentRejected
-
-▸ **argumentRejected**(`messsage`: *string*): *never*
-
-Validation of option argument failed.
-Intended for use from custom argument processing functions.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`messsage` | *string* |
-
-**Returns:** *never*
-
-Defined in: node_modules/commander/typings/index.d.ts:70
-
-___
-
-### attributeName
-
-▸ **attributeName**(): *string*
-
-Return option name, in a camelcase format that can be used
-as a object attribute key.
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:86
-
-___
-
-### choices
-
-▸ **choices**(`values`: *string*[]): [*Option*](#interfacesbincommanderoptionmd)
-
-Only allow option value to be one of choices.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`values` | *string*[] |
-
-**Returns:** [*Option*](#interfacesbincommanderoptionmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:75
-
-___
-
-### default
-
-▸ **default**(`value`: *any*, `description?`: *string*): [*Option*](#interfacesbincommanderoptionmd)
-
-Set the default value, and optionally supply the description to be displayed in the help.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`value` | *any* |
-`description?` | *string* |
-
-**Returns:** [*Option*](#interfacesbincommanderoptionmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:44
-
-___
-
-### fullDescription
-
-▸ **fullDescription**(): *string*
-
-Calculate the full description, including defaultValue etc.
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:49
-
-___
-
-### hideHelp
-
-▸ **hideHelp**(`hide?`: *boolean*): [*Option*](#interfacesbincommanderoptionmd)
-
-Hide option in help.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`hide?` | *boolean* |
-
-**Returns:** [*Option*](#interfacesbincommanderoptionmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:64
-
-___
-
-### makeOptionMandatory
-
-▸ **makeOptionMandatory**(`mandatory?`: *boolean*): [*Option*](#interfacesbincommanderoptionmd)
-
-Whether the option is mandatory and must have a value after parsing.
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`mandatory?` | *boolean* |
-
-**Returns:** [*Option*](#interfacesbincommanderoptionmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:59
-
-___
-
-### name
-
-▸ **name**(): *string*
-
-Return option name.
-
-**Returns:** *string*
-
-Defined in: node_modules/commander/typings/index.d.ts:80
-
-
-<a name="interfacesbincommanderoptionvaluesmd"></a>
-
-[@raydeck/interval-manager - v1.0.0](#readmemd) / [bin](#modulesbinmd) / [commander](#modulesbincommandermd) / OptionValues
-
-# Interface: OptionValues
-
-[bin](#modulesbinmd).[commander](#modulesbincommandermd).OptionValues
-
-## Indexable
-
-▪ [key: *string*]: *any*
-
-
-<a name="interfacesbincommanderoutputconfigurationmd"></a>
-
-[@raydeck/interval-manager - v1.0.0](#readmemd) / [bin](#modulesbinmd) / [commander](#modulesbincommandermd) / OutputConfiguration
-
-# Interface: OutputConfiguration
-
-[bin](#modulesbinmd).[commander](#modulesbincommandermd).OutputConfiguration
-
-## Table of contents
-
-### Methods
-
-- [getErrHelpWidth](#geterrhelpwidth)
-- [getOutHelpWidth](#getouthelpwidth)
-- [outputError](#outputerror)
-- [writeErr](#writeerr)
-- [writeOut](#writeout)
-
-## Methods
-
-### getErrHelpWidth
-
-▸ `Optional`**getErrHelpWidth**(): *number*
-
-**Returns:** *number*
-
-Defined in: node_modules/commander/typings/index.d.ts:152
-
-___
-
-### getOutHelpWidth
-
-▸ `Optional`**getOutHelpWidth**(): *number*
-
-**Returns:** *number*
-
-Defined in: node_modules/commander/typings/index.d.ts:151
-
-___
-
-### outputError
-
-▸ `Optional`**outputError**(`str`: *string*, `write`: (`str`: *string*) => *void*): *void*
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`str` | *string* |
-`write` | (`str`: *string*) => *void* |
-
-**Returns:** *void*
-
-Defined in: node_modules/commander/typings/index.d.ts:153
-
-___
-
-### writeErr
-
-▸ `Optional`**writeErr**(`str`: *string*): *void*
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`str` | *string* |
-
-**Returns:** *void*
-
-Defined in: node_modules/commander/typings/index.d.ts:150
-
-___
-
-### writeOut
-
-▸ `Optional`**writeOut**(`str`: *string*): *void*
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`str` | *string* |
-
-**Returns:** *void*
-
-Defined in: node_modules/commander/typings/index.d.ts:149
+Defined in: node_modules/commander/typings/index.d.ts:20
 
 
 <a name="interfacesbincommanderparseoptionsmd"></a>
@@ -3658,7 +2209,7 @@ Defined in: node_modules/commander/typings/index.d.ts:149
 
 • **from**: *node* \| *electron* \| *user*
 
-Defined in: node_modules/commander/typings/index.d.ts:139
+Defined in: node_modules/commander/typings/index.d.ts:27
 
 
 <a name="interfacesbincommanderparseoptionsresultmd"></a>
@@ -3682,7 +2233,7 @@ Defined in: node_modules/commander/typings/index.d.ts:139
 
 • **operands**: *string*[]
 
-Defined in: node_modules/commander/typings/index.d.ts:608
+Defined in: node_modules/commander/typings/index.d.ts:394
 
 ___
 
@@ -3690,7 +2241,7 @@ ___
 
 • **unknown**: *string*[]
 
-Defined in: node_modules/commander/typings/index.d.ts:609
+Defined in: node_modules/commander/typings/index.d.ts:395
 
 
 <a name="interfacesindexintervalschedulemd"></a>
@@ -3725,7 +2276,7 @@ Defined in: node_modules/commander/typings/index.d.ts:609
 
 • `Optional` **dayInterval**: *number*
 
-Defined in: [src/index.ts:210](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L210)
+Defined in: [src/index.ts:195](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L195)
 
 ___
 
@@ -3733,7 +2284,7 @@ ___
 
 • `Optional` **daysOfMonth**: *number*[]
 
-Defined in: [src/index.ts:205](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L205)
+Defined in: [src/index.ts:190](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L190)
 
 ___
 
@@ -3741,7 +2292,7 @@ ___
 
 • `Optional` **daysOfWeek**: *number*[]
 
-Defined in: [src/index.ts:206](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L206)
+Defined in: [src/index.ts:191](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L191)
 
 ___
 
@@ -3749,7 +2300,7 @@ ___
 
 • `Optional` **daysOfYear**: *number*[]
 
-Defined in: [src/index.ts:207](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L207)
+Defined in: [src/index.ts:192](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L192)
 
 ___
 
@@ -3757,7 +2308,7 @@ ___
 
 • `Optional` **endingOn**: Date
 
-Defined in: [src/index.ts:200](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L200)
+Defined in: [src/index.ts:185](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L185)
 
 ___
 
@@ -3765,7 +2316,7 @@ ___
 
 • **hours**: *number*[]
 
-Defined in: [src/index.ts:201](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L201)
+Defined in: [src/index.ts:186](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L186)
 
 ___
 
@@ -3773,7 +2324,7 @@ ___
 
 • `Optional` **minutes**: *number*[]
 
-Defined in: [src/index.ts:202](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L202)
+Defined in: [src/index.ts:187](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L187)
 
 ___
 
@@ -3781,7 +2332,7 @@ ___
 
 • `Optional` **monthsOfYear**: *number*[]
 
-Defined in: [src/index.ts:204](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L204)
+Defined in: [src/index.ts:189](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L189)
 
 ___
 
@@ -3789,7 +2340,7 @@ ___
 
 • `Optional` **orderInMonth**: *number*[]
 
-Defined in: [src/index.ts:209](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L209)
+Defined in: [src/index.ts:194](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L194)
 
 ___
 
@@ -3797,7 +2348,7 @@ ___
 
 • `Optional` **seconds**: *number*[]
 
-Defined in: [src/index.ts:203](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L203)
+Defined in: [src/index.ts:188](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L188)
 
 ___
 
@@ -3805,7 +2356,7 @@ ___
 
 • `Optional` **startingOn**: Date
 
-Defined in: [src/index.ts:199](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L199)
+Defined in: [src/index.ts:184](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L184)
 
 ___
 
@@ -3813,7 +2364,7 @@ ___
 
 • **timezone**: *string*
 
-Defined in: [src/index.ts:198](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L198)
+Defined in: [src/index.ts:183](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L183)
 
 ___
 
@@ -3821,7 +2372,7 @@ ___
 
 • `Optional` **weekInterval**: *number*
 
-Defined in: [src/index.ts:208](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L208)
+Defined in: [src/index.ts:193](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L193)
 
 
 <a name="modules__tests___intervalmd"></a>
@@ -3843,40 +2394,22 @@ Defined in: [src/index.ts:208](https://github.com/rhdeck/interval-manager/blob/8
 
 ### Interfaces
 
-- [AddHelpTextContext](#interfacesbincommanderaddhelptextcontextmd)
 - [Command](#interfacesbincommandercommandmd)
 - [CommandOptions](#interfacesbincommandercommandoptionsmd)
 - [CommanderError](#interfacesbincommandercommandererrormd)
 - [CommanderStatic](#interfacesbincommandercommanderstaticmd)
 - [ExecutableCommandOptions](#interfacesbincommanderexecutablecommandoptionsmd)
-- [Help](#interfacesbincommanderhelpmd)
-- [HelpContext](#interfacesbincommanderhelpcontextmd)
-- [InvalidOptionArgumentError](#interfacesbincommanderinvalidoptionargumenterrormd)
 - [Option](#interfacesbincommanderoptionmd)
-- [OptionValues](#interfacesbincommanderoptionvaluesmd)
-- [OutputConfiguration](#interfacesbincommanderoutputconfigurationmd)
 - [ParseOptions](#interfacesbincommanderparseoptionsmd)
 - [ParseOptionsResult](#interfacesbincommanderparseoptionsresultmd)
 
 ### Type aliases
 
-- [AddHelpTextPosition](#addhelptextposition)
 - [CommandConstructor](#commandconstructor)
 - [CommanderErrorConstructor](#commandererrorconstructor)
-- [HelpConfiguration](#helpconfiguration)
-- [HelpConstructor](#helpconstructor)
-- [InvalidOptionArgumentErrorConstructor](#invalidoptionargumenterrorconstructor)
 - [OptionConstructor](#optionconstructor)
 
 ## Type aliases
-
-### AddHelpTextPosition
-
-Ƭ **AddHelpTextPosition**: *beforeAll* \| *before* \| *after* \| *afterAll*
-
-Defined in: node_modules/commander/typings/index.d.ts:157
-
-___
 
 ### CommandConstructor
 
@@ -3894,7 +2427,7 @@ Name | Type |
 
 **Returns:** [*Command*](#interfacesbincommandercommandmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:594
+Defined in: node_modules/commander/typings/index.d.ts:382
 
 ___
 
@@ -3916,49 +2449,7 @@ Name | Type |
 
 **Returns:** [*CommanderError*](#interfacesbincommandercommandererrormd)
 
-Defined in: node_modules/commander/typings/index.d.ts:16
-
-___
-
-### HelpConfiguration
-
-Ƭ **HelpConfiguration**: *Partial*<[*Help*](#interfacesbincommanderhelpmd)\>
-
-Defined in: node_modules/commander/typings/index.d.ts:136
-
-___
-
-### HelpConstructor
-
-Ƭ **HelpConstructor**: () => [*Help*](#interfacesbincommanderhelpmd)
-
-#### Type declaration:
-
-\+ (): [*Help*](#interfacesbincommanderhelpmd)
-
-**Returns:** [*Help*](#interfacesbincommanderhelpmd)
-
-Defined in: node_modules/commander/typings/index.d.ts:135
-
-___
-
-### InvalidOptionArgumentErrorConstructor
-
-Ƭ **InvalidOptionArgumentErrorConstructor**: (`message`: *string*) => [*InvalidOptionArgumentError*](#interfacesbincommanderinvalidoptionargumenterrormd)
-
-#### Type declaration:
-
-\+ (`message`: *string*): [*InvalidOptionArgumentError*](#interfacesbincommanderinvalidoptionargumenterrormd)
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`message` | *string* |
-
-**Returns:** [*InvalidOptionArgumentError*](#interfacesbincommanderinvalidoptionargumenterrormd)
-
-Defined in: node_modules/commander/typings/index.d.ts:21
+Defined in: node_modules/commander/typings/index.d.ts:12
 
 ___
 
@@ -3979,7 +2470,7 @@ Name | Type |
 
 **Returns:** [*Option*](#interfacesbincommanderoptionmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:88
+Defined in: node_modules/commander/typings/index.d.ts:24
 
 
 <a name="modulesbinmd"></a>
@@ -4004,7 +2495,7 @@ Defined in: node_modules/commander/typings/index.d.ts:88
 
 • **commander**: [*CommanderStatic*](#interfacesbincommandercommanderstaticmd)
 
-Defined in: node_modules/commander/typings/index.d.ts:626
+Defined in: node_modules/commander/typings/index.d.ts:409
 
 
 <a name="modulesindexmd"></a>
@@ -4022,6 +2513,7 @@ Defined in: node_modules/commander/typings/index.d.ts:626
 ### Functions
 
 - [getNextDate](#getnextdate)
+- [isValidTimeZone](#isvalidtimezone)
 - [validateSchedule](#validateschedule)
 
 ## Functions
@@ -4040,7 +2532,23 @@ Name | Type |
 
 **Returns:** Date
 
-Defined in: [src/index.ts:2](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L2)
+Defined in: [src/index.ts:2](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L2)
+
+___
+
+### isValidTimeZone
+
+▸ **isValidTimeZone**(`tz`: *string*): *boolean*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`tz` | *string* |
+
+**Returns:** *boolean*
+
+Defined in: [src/index.ts:291](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L291)
 
 ___
 
@@ -4056,4 +2564,4 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [src/index.ts:216](https://github.com/rhdeck/interval-manager/blob/8dfa3fc/src/index.ts#L216)
+Defined in: [src/index.ts:197](https://github.com/rhdeck/interval-manager/blob/bb11e74/src/index.ts#L197)
