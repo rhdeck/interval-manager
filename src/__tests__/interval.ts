@@ -35,4 +35,54 @@ describe("Validator", () => {
       validateSchedule({ hours: [8], timezone: "Bibble Bob" })
     ).toThrow();
   });
+  it("badEndingOn", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [1],
+        endingOn: <Date>(<unknown>"bobb"),
+      });
+    }).toThrow();
+  });
+  it("emptyHours", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [],
+      });
+    }).toThrow();
+  });
+  it("emptyHoursArray", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [1],
+        startingOn: <Date>(<unknown>"bobb"),
+      });
+    }).toThrow();
+  });
+  it("tooHighHour", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [1, 2, 24],
+      });
+    }).toThrow();
+  });
+  it("tooLowHour", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [1, 2, -1],
+      });
+    }).toThrow();
+  });
+  it("nonWholeHour", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [1, 2, 1.3],
+      });
+    }).toThrow();
+  });
 });

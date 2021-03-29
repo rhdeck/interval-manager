@@ -251,9 +251,6 @@ export function validateSchedule(schedule: IntervalSchedule): void {
     throw new Error("If set, endingOn must be a date");
   if (startingOn && !(startingOn instanceof Date))
     throw new Error("If set, startingOn must be a date");
-  if (!timezone) {
-    throw new Error("Invalid schedule - timezone is required");
-  }
   if (!isValidTimeZone(timezone)) {
     throw new Error("Invalid schedule - no timezone set");
   }
