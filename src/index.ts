@@ -303,11 +303,6 @@ export function validateSchedule(schedule: IntervalSchedule): void {
       "Invalid schedule - must specify daysOfWeek when using orderInMonth"
     );
   }
-  if (orderInMonth && !daysOfWeek) {
-    throw new Error(
-      "Invalid schedule - must specify daysOfWeek when using orderInMonth"
-    );
-  }
   if (
     weekInterval &&
     (dayInterval || daysOfMonth || daysOfYear || orderInMonth || monthsOfYear)
@@ -324,7 +319,7 @@ export function validateSchedule(schedule: IntervalSchedule): void {
     throw new Error("weekInterval must be an integer");
   if (
     dayInterval &&
-    (daysOfMonth || daysOfYear || orderInMonth || monthsOfYear)
+    (daysOfWeek || daysOfMonth || daysOfYear || orderInMonth || monthsOfYear)
   ) {
     throw new Error(
       "Invalid schedule - cannot mix dayInterval with weekInterval, daysOfMonth, daysOfYear, orderInMonth, monthsOfYear"
