@@ -386,4 +386,13 @@ describe("getNextDate", () => {
       ).toISOString()
     ).toBe("2020-03-31T18:00:00.000Z");
   });
+  it("Every third day schedule starting the previous day that should fire later today", () => {
+    expect(
+      getNextDate(
+        { hours: [14], timezone, dayInterval: 3 },
+        yesterday,
+        referenceDate
+      ).toISOString()
+    ).toBe("2020-04-02T18:00:00.000Z");
+  });
 });
