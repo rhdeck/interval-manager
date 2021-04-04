@@ -1,4 +1,4 @@
-import { validateSchedule, isValidTimeZone } from "../";
+import { validateSchedule, isValidTimeZone, getNextDate, MAY, JULY } from "../";
 describe("isValidTimeZone", () => {
   // it("Check missing intl", () => {
   // const i = Intl;
@@ -289,5 +289,101 @@ describe("Validator", () => {
         daysOfYear: [3],
       });
     }).toThrow();
+  });
+});
+describe("getNextDate", () => {
+  const referenceDate = new Date("2020-03-31T17:00:00Z"); // 3/31/20 1pm EDT
+  const yesterday = new Date("2020-03-30T17:00:00Z");
+  // const weekago = new Date("2020-03-24T17:00:00Z");
+  const weekagoyesterday = new Date("2020-03-23T17:00:00Z");
+  const hours = [8];
+  const timezone = "America/New_York";
+  it("Monthly schedule based on days of week", () => {
+    expect(
+      getNextDate(
+        { timezone, hours, orderInMonth: [4], daysOfWeek: [3] },
+        referenceDate,
+        referenceDate
+      ).toISOString()
+    ).toBe("2020-04-22T12:00:00.000Z");
+  });
+  it("Monthly schedule based last wednesday", () => {
+    expect(
+      getNextDate(
+        { timezone, hours, orderInMonth: [-1], daysOfWeek: [3] },
+        referenceDate,
+        referenceDate
+      ).toISOString()
+    ).toBe("2020-04-29T12:00:00.000Z");
+  });
+  it("Summer-only monthly schedule based on days of week", () => {
+    expect(
+      getNextDate(
+        {
+          timezone,
+          hours,
+          orderInMonth: [4],
+          daysOfWeek: [3],
+          monthsOfYear: [6, 7, 8],
+        },
+        referenceDate,
+        referenceDate
+      ).toISOString()
+    ).toBe("2020-06-24T12:00:00.000Z");
+  });
+  it("Weekly schedule starting yesterday", () => {
+    expect(
+      getNextDate(
+        { timezone, hours: [19], weekInterval: 1, daysOfWeek: [2] },
+        weekagoyesterday,
+        referenceDate
+      ).toISOString()
+    ).toBe("2020-03-31T23:00:00.000Z");
+  });
+  it("Days of year schedule", () => {
+    expect(
+      getNextDate(
+        { timezone, hours, daysOfYear: [23] },
+        referenceDate,
+        referenceDate
+      ).toISOString()
+    ).toBe("2021-01-23T13:00:00.000Z");
+  });
+  it("DaysOfMonth schedule", () => {
+    expect(
+      getNextDate(
+        { hours, timezone, daysOfMonth: [4, 5], monthsOfYear: [MAY] },
+        referenceDate,
+        referenceDate
+      ).toISOString()
+    ).toBe("2020-05-04T12:00:00.000Z");
+  });
+  it("DaysOfWeek schedule", () => {
+    expect(
+      getNextDate(
+        { hours, timezone, daysOfWeek: [2], monthsOfYear: [JULY] },
+        referenceDate,
+        referenceDate
+      ).toISOString()
+    ).toBe("2020-07-07T12:00:00.000Z");
+  });
+
+  it("Daily schedule from known reference point", () => {
+    expect(
+      getNextDate(
+        { hours, timezone },
+        new Date("2020-03-31T17:00:00Z"),
+        new Date("2020-03-31T17:00:00Z")
+      ).toISOString()
+    ).toBe("2020-04-01T12:00:00.000Z");
+  });
+  it("Daily schedule starting the previous day that should fire later today", () => {
+    expect(
+      getNextDate(
+        { hours: [14], timezone },
+        yesterday,
+        referenceDate
+      ).toISOString()
+    ).toBe("2020-03-31T18:00:00.000Z");
   });
 });
