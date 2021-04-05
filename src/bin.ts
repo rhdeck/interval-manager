@@ -179,6 +179,7 @@ if (!commander.isDocumenting) {
       dayInterval,
       timezone,
       endingOn: endingDate,
+      startingOn: startingDate,
     };
     //   if (verbose) console.log(schedule);
     validateSchedule(schedule);
@@ -186,11 +187,7 @@ if (!commander.isDocumenting) {
     let nextDate = new Date(referenceDate);
     const out: string[] = [];
     for (let x = 0; x < maxDates; x++) {
-      nextDate = getNextDate(
-        schedule,
-        new Date(startingDate),
-        new Date(nextDate)
-      );
+      nextDate = getNextDate(schedule, new Date(nextDate));
       out.push(
         verbose
           ? DateTime.fromJSDate(nextDate).toLocaleString(
