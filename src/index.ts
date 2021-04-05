@@ -9,7 +9,6 @@ import { DateTime } from "luxon";
  */
 export function getNextDate(
   schedule: IntervalSchedule,
-  startingOn: Date = new Date(),
   nowDate: Date = new Date()
 ): Date {
   const {
@@ -24,9 +23,16 @@ export function getNextDate(
     orderInMonth,
     monthsOfYear,
     dayInterval,
+    startingOn: _startingOn,
+    endingOn: _endingOn,
   } = schedule;
   validateSchedule(schedule);
+  const startingOn = _startingOn && new Date(_startingOn);
+  const endingOn = _endingOn && new Date(_endingOn);
   let now = DateTime.fromJSDate(nowDate).setZone(timezone);
+  if (startingOn && now.valueOf() < startingOn.valueOf()) {
+    now = DateTime.fromJSDate(startingOn).setZone(timezone);
+  }
   //Figure out combination of days and weeks
   const potentialTimes = hours.flatMap((hour) =>
     (minutes || [0]).flatMap((minute) =>
@@ -80,6 +86,7 @@ export function getNextDate(
       start = start.plus({ month: 1 });
     }
   } else if (weekInterval) {
+    if (!startingOn) throw new Error("weekInterval requires startingOn");
     let start = DateTime.fromJSDate(startingOn)
       .setZone(timezone)
       .set({ weekday: 0 });
@@ -117,7 +124,10 @@ export function getNextDate(
           now = now.plus({ month: 1 }).set({ day: 1 });
         }
       }
-      while (!daysOfMonth.includes(now.day)) {
+      while (
+        !daysOfMonth.includes(now.day) &&
+        !(daysOfMonth.includes(-1) && now.day === now.endOf("month").day)
+      ) {
         now = now.plus({ day: 1 });
         if (monthsOfYear) {
           while (!monthsOfYear.includes(now.month)) {
@@ -148,6 +158,7 @@ export function getNextDate(
       now = now.plus({ day: 1 });
     }
   } else if (dayInterval) {
+    if (!startingOn) throw new Error("weekInterval requires startingOn");
     let start = DateTime.fromJSDate(startingOn).setZone(timezone);
     now = now.set({
       hour: 0,
@@ -182,6 +193,9 @@ export function getNextDate(
   const nowISO = DateTime.fromJSDate(nowDate).setZone(timezone).toISO();
   const nextDate = sortedDates.find((iso) => iso > nowISO);
   if (nextDate) {
+    if (endingOn && new Date(nextDate).valueOf() > endingOn.valueOf()) {
+      throw "Next date is after endingOn";
+    }
     return new Date(nextDate);
   } else {
     throw "No next date available";
@@ -257,99 +271,137 @@ export function validateSchedule(schedule: IntervalSchedule): void {
   }
   if (!hours.length) throw new Error("hours array must have at least one hour");
   hours.map((hour) => {
-    if (hour < 0 || hour > 23)
-      throw new Error("Hour must be between 0 and 23 inclusive");
-    if (Math.floor(hour) !== hour)
-      throw new Error("Hour must be a whole number between 0 and 23 inclusive");
+    if (!HOURS.includes(hour))
+      throw new Error("Hour must be an integer between 0 and 23 inclusive");
   });
   if (seconds) {
-    if (!seconds.length)
+    if (!seconds.length) {
       throw new Error("Seconds array must have at least one second defined");
+    }
     seconds.map((second) => {
-      if (second < 0 || second > 59)
-        throw new Error("Second must be between 0 and 59 inclusive");
-      if (Math.floor(second) !== second)
+      if (!SECONDS.includes(second))
         throw new Error(
           "Second must be a whole number between 0 and 59 inclusive"
         );
     });
   }
   if (minutes) {
-    if (!minutes.length)
+    if (!minutes.length) {
       throw new Error("Minutes array must have at least one minute defined");
+    }
     minutes.map((minute) => {
-      if (minute < 0 || minute > 59)
+      if (!MINUTES.includes(minute))
         throw new Error("Minute must be between 0 and 59 inclusive");
-      if (Math.floor(minute) !== minute)
+    });
+  }
+  if (daysOfMonth) {
+    if (!daysOfMonth.length) {
+      throw new Error("daysOfMonth array must contain values");
+    }
+    if (daysOfYear || daysOfWeek || orderInMonth) {
+      throw new Error(
+        "Invalid schedule - cannot mix daysOfMonth with daysOfWeek or orderInMonth"
+      );
+    }
+    daysOfMonth.forEach((day) => {
+      if (!DAYSOFMONTH.includes(day)) {
         throw new Error(
-          "Minute must be a whole number between 0 and 59 inclusive"
+          "Day must be between 1 and 31 inclusive, or -1 for the last day of the month. Tested value is " +
+            day
+        );
+      }
+    });
+  }
+  if (daysOfWeek) {
+    if (!daysOfWeek.length) {
+      throw new Error("daysOfWeek array must contain values");
+    }
+    daysOfWeek.forEach((dow) => {
+      if (!Object.values(DAYSOFWEEK).includes(dow))
+        throw new Error(
+          "Day of week must be an integer between 0 and 6 inclusive"
         );
     });
   }
-  if (orderInMonth && !orderInMonth.length) {
-    throw new Error("orderInMonth array must contain values");
-  }
-  if (daysOfMonth && !daysOfMonth.length) {
-    throw new Error("daysOfMonth array must contain values");
-  }
-  if (daysOfYear && !daysOfYear.length) {
-    throw new Error("daysOfYear array must contain values");
-  }
-  daysOfMonth?.forEach((day) => {
-    if (Math.floor(day) !== day){
-      throw new Error("daysOfMonth must all be integers");
+  if (orderInMonth) {
+    if (!orderInMonth.length) {
+      throw new Error("orderInMonth array must contain values");
     }
-    if(!DAYSOFMONTH.includes(day)) { 
-      throw new Error("Day must be between 1 and 31 inclusive, or -1 for the last day of the month. Tested value is " + day)
+    orderInMonth.forEach((order) => {
+      if (!ORDERINMONTH.includes(order)) {
+        throw new Error(
+          "orderInMonth must be an integer between 1 and 5 inclusive, or -1 for last"
+        );
+      }
+    });
+    if (daysOfMonth || daysOfYear || weekInterval) {
+      throw new Error(
+        "Invalid schedule - cannot mix orderinmonth with daysOfMonth, daysOfYear or weekInterval"
+      );
     }
-  });
-
-  if (daysOfWeek && !daysOfWeek.length)
-    throw new Error("daysOfWeek array must contain values");
-
-  if (orderInMonth && (daysOfMonth || daysOfYear || weekInterval))
-    throw new Error(
-      "Invalid schedule - cannot mix orderinmonth with daysOfMonth, daysOfYear or weekInterval"
-    );
-  if (orderInMonth && !daysOfWeek) {
-    throw new Error(
-      "Invalid schedule - must specify daysOfWeek when using orderInMonth"
-    );
+    if (!daysOfWeek) {
+      throw new Error(
+        "Invalid schedule - must specify daysOfWeek when using orderInMonth"
+      );
+    }
   }
-  if (
-    weekInterval &&
-    (dayInterval || daysOfMonth || daysOfYear || orderInMonth || monthsOfYear)
-  )
-    throw new Error(
-      "Invalid schedule - cannot mix weekInterval with dayInterval, daysOfMonth, daysOfYar or orderInmonth"
-    );
-  if (weekInterval && !daysOfWeek) {
-    throw new Error(
-      "Invalid schedule - week interval must include at least one day of week to run on"
-    );
+  if (weekInterval) {
+    if (
+      dayInterval ||
+      daysOfMonth ||
+      daysOfYear ||
+      orderInMonth ||
+      monthsOfYear
+    ) {
+      throw new Error(
+        "Invalid schedule - cannot mix weekInterval with dayInterval, daysOfMonth, daysOfYar or orderInmonth"
+      );
+    }
+    if (!daysOfWeek) {
+      throw new Error(
+        "Invalid schedule - week interval must include at least one day of week to run on"
+      );
+    }
+    if (!WEEKINTERVALS.includes(weekInterval)) {
+      throw new Error("weekInterval must be between 1 and 100 inclusive");
+    }
+    if (!startingOn)
+      throw new Error("weekInterval requires startingOn for reference");
   }
-  if (weekInterval && Math.floor(weekInterval) !== weekInterval)
-    throw new Error("weekInterval must be an integer");
-  if (
-    dayInterval &&
-    (daysOfWeek || daysOfMonth || daysOfYear || orderInMonth || monthsOfYear)
-  ) {
-    throw new Error(
-      "Invalid schedule - cannot mix dayInterval with weekInterval, daysOfMonth, daysOfYear, orderInMonth, monthsOfYear"
-    );
+  if (dayInterval) {
+    if (
+      daysOfWeek ||
+      daysOfMonth ||
+      daysOfYear ||
+      orderInMonth ||
+      monthsOfYear
+    ) {
+      throw new Error(
+        "Invalid schedule - cannot mix dayInterval with weekInterval, daysOfMonth, daysOfYear, orderInMonth, monthsOfYear"
+      );
+    }
+    if (!DAYINTERVALS.includes(dayInterval)) {
+      throw new Error("dayInterval must be between 1 and 1000 inclusive");
+    }
+    if (!startingOn)
+      throw new Error("dayInterval requires startingOn for reference");
   }
-  if (dayInterval && Math.floor(dayInterval) !== dayInterval)
-    throw new Error("dayInterval must be an integer");
-
-  if (daysOfYear && (daysOfMonth || monthsOfYear || daysOfWeek)) {
-    throw new Error(
-      "Invalid schedule - cannot mix daysOfYear with other date considerations"
-    );
-  }
-  if (daysOfMonth && (daysOfWeek || orderInMonth)) {
-    throw new Error(
-      "Invalid schedule - cannot mix daysOfMonth with daysOfWeek or orderInMonth"
-    );
+  if (daysOfYear) {
+    if (!daysOfYear.length) {
+      throw new Error("daysOfYear must contain at least one day");
+    }
+    if (daysOfMonth || monthsOfYear || daysOfWeek) {
+      throw new Error(
+        "Invalid schedule - cannot mix daysOfYear with other date considerations"
+      );
+    }
+    daysOfYear.map((doy) => {
+      if (!DAYSOFYEAR.includes(doy)) {
+        throw new Error(
+          "Day of year must be an integer between 1 and 366 inclusive"
+        );
+      }
+    });
   }
 }
 /**
@@ -368,7 +420,6 @@ export function isValidTimeZone(tz: string): boolean {
     return false;
   }
 }
-
 export const SUNDAY = 0;
 export const MONDAY = 1;
 export const TUESDAY = 2;
@@ -388,4 +439,78 @@ export const SEPTEMBER = 9;
 export const OCTOBER = 10;
 export const NOVEMBER = 11;
 export const DECEMBER = 12;
-const DAYSOFMONTH = [-1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+export const LASTDAY = -1;
+const DAYSOFMONTH = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  LASTDAY,
+];
+export const DAYSOFWEEK = {
+  SUNDAY,
+  MONDAY,
+  TUESDAY,
+  WEDNESDAY,
+  THURSDAY,
+  FRIDAY,
+  SATURDAY,
+};
+export const MONTHSOFYEAR = {
+  JANUARY,
+  FEBRUARY,
+  MARCH,
+  APRIL,
+  MAY,
+  JUNE,
+  JULY,
+  AUGUST,
+  SEPTEMBER,
+  OCTOBER,
+  NOVEMBER,
+  DECEMBER,
+};
+export const ORDERINMONTH = [1, 2, 3, 4, 5, LASTDAY];
+/** Valid  */
+export const HOURS = [...Array(24).keys()];
+/** Valid minutes */
+export const MINUTES = [...Array(60).keys()];
+/** Valid seconds */
+export const SECONDS = [...Array(60).keys()];
+/** Valid days of the year */
+export const DAYSOFYEAR = [...Array.from(Array(367).keys()).slice(1)];
+/**
+ * Valid day intervals
+ */
+export const DAYINTERVALS = [...Array.from(Array(1001).keys()).slice(1)];
+/**
+ * Valid week intervals
+ */
+export const WEEKINTERVALS = [...Array.from(Array(101).keys()).slice(1)];
