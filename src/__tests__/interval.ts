@@ -1,19 +1,19 @@
 import { validateSchedule, isValidTimeZone, getNextDate, MAY, JULY } from "../";
 describe("isValidTimeZone", () => {
-  // it("Check missing intl", () => {
-  // const i = Intl;
-  // //@eslint-disable-line @ts-ignore-line  @eslint-disable-next-line
-  // global.Intl = undefined;
-  // expect(() => isValidTimeZone("America/New_York")).toThrow();
-  // // @eslint-disable-line @ts-ignore @eslint-disable-next-line
-  // global.Intl = i;
-  // });
   it("America/New_York should succeed", () =>
     expect(isValidTimeZone("America/New_York")).toBe(true));
   it("America/New_Amsterdam should fail", () =>
     expect(isValidTimeZone("America/New_Amsterdam")).toBe(false));
+  it("Check missing intl", () => {
+    const i = Intl;
+    //@eslint-disable-line @ts-ignore-line  @eslint-disable-next-line
+    (<{ Intl: undefined }>(<unknown>global)).Intl = undefined;
+    expect(() => isValidTimeZone("America/New_York")).toThrow();
+    // @eslint-disable-line @ts-ignore @eslint-disable-next-line
+    global.Intl = i;
+  });
 });
-describe("Validator", () => {
+describe("validateSchedule", () => {
   it("isDefined", () => {
     expect(validateSchedule).toBeDefined();
   });
@@ -175,12 +175,40 @@ describe("Validator", () => {
       });
     }).toThrow();
   });
+  it("badDaysOfMonth", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [2],
+        daysOfMonth: [32],
+      });
+    }).toThrow();
+  });
   it("emptyDaysOfYear", () => {
     expect(() => {
       validateSchedule({
         timezone: "America/New_York",
         hours: [2],
         daysOfYear: [],
+      });
+    }).toThrow();
+  });
+  it("badDaysOfYear", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [2],
+        daysOfYear: [-3],
+      });
+    }).toThrow();
+  });
+  it("mixDaysOfYearWithDaysOfMonth", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [2],
+        daysOfYear: [-3],
+        daysOfWeek: [3],
       });
     }).toThrow();
   });
@@ -222,6 +250,26 @@ describe("Validator", () => {
       });
     }).toThrow();
   });
+  it("badOrderInMonth", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [2],
+        orderInMonth: [72],
+        daysOfWeek: [4, 5],
+      });
+    }).toThrow();
+  });
+  it("badDaysOfWeek", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [2],
+        orderInMonth: [2],
+        daysOfWeek: [4.3, 5],
+      });
+    }).toThrow();
+  });
   it("weekIntervalWithDayInterval", () => {
     expect(() => {
       validateSchedule({
@@ -238,6 +286,16 @@ describe("Validator", () => {
         timezone: "America/New_York",
         hours: [2],
         weekInterval: 2,
+      });
+    }).toThrow();
+  });
+  it("weekIntervalWithoutStartingOn", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [2],
+        weekInterval: 2,
+        daysOfWeek: [3],
       });
     }).toThrow();
   });
@@ -267,6 +325,15 @@ describe("Validator", () => {
         timezone: "America/New_York",
         hours: [2],
         dayInterval: 2.1,
+      });
+    }).toThrow();
+  });
+  it("dayIntervalWithoutStartingDate", () => {
+    expect(() => {
+      validateSchedule({
+        timezone: "America/New_York",
+        hours: [2],
+        dayInterval: 2,
       });
     }).toThrow();
   });
@@ -302,7 +369,6 @@ describe("getNextDate", () => {
     expect(
       getNextDate(
         { timezone, hours, orderInMonth: [4], daysOfWeek: [3] },
-        referenceDate,
         referenceDate
       ).toISOString()
     ).toBe("2020-04-22T12:00:00.000Z");
@@ -310,8 +376,13 @@ describe("getNextDate", () => {
   it("Monthly schedule based last wednesday", () => {
     expect(
       getNextDate(
-        { timezone, hours, orderInMonth: [-1], daysOfWeek: [3] },
-        referenceDate,
+        {
+          timezone,
+          hours,
+          orderInMonth: [-1],
+          daysOfWeek: [3],
+          startingOn: new Date(referenceDate),
+        },
         referenceDate
       ).toISOString()
     ).toBe("2020-04-29T12:00:00.000Z");
@@ -326,7 +397,6 @@ describe("getNextDate", () => {
           daysOfWeek: [3],
           monthsOfYear: [6, 7, 8],
         },
-        referenceDate,
         referenceDate
       ).toISOString()
     ).toBe("2020-06-24T12:00:00.000Z");
@@ -334,8 +404,13 @@ describe("getNextDate", () => {
   it("Weekly schedule starting yesterday", () => {
     expect(
       getNextDate(
-        { timezone, hours: [19], weekInterval: 1, daysOfWeek: [2] },
-        weekagoyesterday,
+        {
+          timezone,
+          hours: [19],
+          weekInterval: 1,
+          daysOfWeek: [2],
+          startingOn: weekagoyesterday,
+        },
         referenceDate
       ).toISOString()
     ).toBe("2020-03-31T23:00:00.000Z");
@@ -344,7 +419,6 @@ describe("getNextDate", () => {
     expect(
       getNextDate(
         { timezone, hours, daysOfYear: [23] },
-        referenceDate,
         referenceDate
       ).toISOString()
     ).toBe("2021-01-23T13:00:00.000Z");
@@ -353,16 +427,22 @@ describe("getNextDate", () => {
     expect(
       getNextDate(
         { hours, timezone, daysOfMonth: [4, 5], monthsOfYear: [MAY] },
-        referenceDate,
         referenceDate
       ).toISOString()
     ).toBe("2020-05-04T12:00:00.000Z");
+  });
+  it("Last day of month schedule", () => {
+    expect(
+      getNextDate(
+        { hours, timezone, daysOfMonth: [-1], monthsOfYear: [MAY] },
+        referenceDate
+      ).toISOString()
+    ).toBe("2020-05-31T12:00:00.000Z");
   });
   it("DaysOfWeek schedule", () => {
     expect(
       getNextDate(
         { hours, timezone, daysOfWeek: [2], monthsOfYear: [JULY] },
-        referenceDate,
         referenceDate
       ).toISOString()
     ).toBe("2020-07-07T12:00:00.000Z");
@@ -372,25 +452,19 @@ describe("getNextDate", () => {
     expect(
       getNextDate(
         { hours, timezone },
-        new Date("2020-03-31T17:00:00Z"),
         new Date("2020-03-31T17:00:00Z")
       ).toISOString()
     ).toBe("2020-04-01T12:00:00.000Z");
   });
   it("Daily schedule starting the previous day that should fire later today", () => {
     expect(
-      getNextDate(
-        { hours: [14], timezone },
-        yesterday,
-        referenceDate
-      ).toISOString()
+      getNextDate({ hours: [14], timezone }, referenceDate).toISOString()
     ).toBe("2020-03-31T18:00:00.000Z");
   });
   it("Every third day schedule starting the previous day that should fire later today", () => {
     expect(
       getNextDate(
-        { hours: [14], timezone, dayInterval: 3 },
-        yesterday,
+        { hours: [14], timezone, dayInterval: 3, startingOn: yesterday },
         referenceDate
       ).toISOString()
     ).toBe("2020-04-02T18:00:00.000Z");
