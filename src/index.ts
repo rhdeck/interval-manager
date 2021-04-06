@@ -420,26 +420,30 @@ export function isValidTimeZone(tz: string): boolean {
     return false;
   }
 }
-export const SUNDAY = 0;
-export const MONDAY = 1;
-export const TUESDAY = 2;
-export const WEDNESDAY = 3;
-export const THURSDAY = 4;
-export const FRIDAY = 5;
-export const SATURDAY = 6;
-export const JANUARY = 1;
-export const FEBRUARY = 2;
-export const MARCH = 3;
-export const APRIL = 4;
-export const MAY = 5;
-export const JUNE = 6;
-export const JULY = 7;
-export const AUGUST = 8;
-export const SEPTEMBER = 9;
-export const OCTOBER = 10;
-export const NOVEMBER = 11;
-export const DECEMBER = 12;
-export const LASTDAY = -1;
+const SUNDAY = 0;
+const MONDAY = 1;
+const TUESDAY = 2;
+const WEDNESDAY = 3;
+const THURSDAY = 4;
+const FRIDAY = 5;
+const SATURDAY = 6;
+const JANUARY = 1;
+const FEBRUARY = 2;
+const MARCH = 3;
+const APRIL = 4;
+const MAY = 5;
+const JUNE = 6;
+const JULY = 7;
+const AUGUST = 8;
+const SEPTEMBER = 9;
+const OCTOBER = 10;
+const NOVEMBER = 11;
+const DECEMBER = 12;
+const LASTDAY = -1;
+/**
+ * Valid days of the month (1-31), including last possible day of the month (-1)
+ * Note: Not all months have the same number of days
+ */
 const DAYSOFMONTH = [
   1,
   2,
@@ -474,6 +478,7 @@ const DAYSOFMONTH = [
   31,
   LASTDAY,
 ];
+/** Valid days of the week by name (valid values 0-6) */
 export const DAYSOFWEEK = {
   SUNDAY,
   MONDAY,
@@ -483,6 +488,9 @@ export const DAYSOFWEEK = {
   FRIDAY,
   SATURDAY,
 };
+/**
+ * Months of the year by name (valid values 1-12)
+ */
 export const MONTHSOFYEAR = {
   JANUARY,
   FEBRUARY,
@@ -497,20 +505,24 @@ export const MONTHSOFYEAR = {
   NOVEMBER,
   DECEMBER,
 };
+/**
+ * Valid order in a month for a weekday (e.g. 3rd Friday).
+ * Note: LASTDAY of -1 when you want the last of that weeekday (e.g. last Monday of the month)
+ */
 export const ORDERINMONTH = [1, 2, 3, 4, 5, LASTDAY];
-/** Valid  */
+/** Valid  hours of the day 0-23 */
 export const HOURS = [...Array(24).keys()];
-/** Valid minutes */
+/** Valid minutes 0-59 */
 export const MINUTES = [...Array(60).keys()];
-/** Valid seconds */
+/** Valid seconds 0-59 */
 export const SECONDS = [...Array(60).keys()];
-/** Valid days of the year */
+/** Valid days of the year 1-366 */
 export const DAYSOFYEAR = [...Array.from(Array(367).keys()).slice(1)];
 /**
- * Valid day intervals
+ * Valid day intervals 1-1000
  */
 export const DAYINTERVALS = [...Array.from(Array(1001).keys()).slice(1)];
 /**
- * Valid week intervals
+ * Valid week intervals 1-100
  */
 export const WEEKINTERVALS = [...Array.from(Array(101).keys()).slice(1)];

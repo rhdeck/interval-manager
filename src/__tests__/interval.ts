@@ -1,4 +1,9 @@
-import { validateSchedule, isValidTimeZone, getNextDate, MAY, JULY } from "../";
+import {
+  validateSchedule,
+  isValidTimeZone,
+  getNextDate,
+  MONTHSOFYEAR,
+} from "../";
 describe("isValidTimeZone", () => {
   it("America/New_York should succeed", () =>
     expect(isValidTimeZone("America/New_York")).toBe(true));
@@ -426,7 +431,12 @@ describe("getNextDate", () => {
   it("DaysOfMonth schedule", () => {
     expect(
       getNextDate(
-        { hours, timezone, daysOfMonth: [4, 5], monthsOfYear: [MAY] },
+        {
+          hours,
+          timezone,
+          daysOfMonth: [4, 5],
+          monthsOfYear: [MONTHSOFYEAR.MAY],
+        },
         referenceDate
       ).toISOString()
     ).toBe("2020-05-04T12:00:00.000Z");
@@ -434,7 +444,12 @@ describe("getNextDate", () => {
   it("Last day of month schedule", () => {
     expect(
       getNextDate(
-        { hours, timezone, daysOfMonth: [-1], monthsOfYear: [MAY] },
+        {
+          hours,
+          timezone,
+          daysOfMonth: [-1],
+          monthsOfYear: [MONTHSOFYEAR.MAY],
+        },
         referenceDate
       ).toISOString()
     ).toBe("2020-05-31T12:00:00.000Z");
@@ -442,7 +457,7 @@ describe("getNextDate", () => {
   it("DaysOfWeek schedule", () => {
     expect(
       getNextDate(
-        { hours, timezone, daysOfWeek: [2], monthsOfYear: [JULY] },
+        { hours, timezone, daysOfWeek: [2], monthsOfYear: [MONTHSOFYEAR.JULY] },
         referenceDate
       ).toISOString()
     ).toBe("2020-07-07T12:00:00.000Z");
